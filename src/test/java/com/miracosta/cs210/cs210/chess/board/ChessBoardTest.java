@@ -66,4 +66,14 @@ class ChessBoardTest {
         }
 
     }
+
+    @Test
+    void tileTester() {
+        for(int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                assertEquals(board.getTile(i,j).getRow(), i);
+                assertEquals(board.getTile(i,j).getColumn(), j);
+            }
+        }
+    }
 }

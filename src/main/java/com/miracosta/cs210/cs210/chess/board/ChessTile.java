@@ -23,6 +23,14 @@ public class ChessTile {
         return true;
     }
 
+    int getRow() {
+        return row;
+    }
+
+    int getColumn() {
+        return column;
+    }
+
     void forceSetPiece(ChessPiece piece) {
         this.piece = piece;
         this.piece.setPosition(this);
