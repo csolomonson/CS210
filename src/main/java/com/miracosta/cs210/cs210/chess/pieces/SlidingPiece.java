@@ -3,6 +3,12 @@ package com.miracosta.cs210.cs210.chess.pieces;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
 
 public abstract class SlidingPiece extends ChessPiece {
+
+    protected boolean diagonal;
+    protected boolean lateral;
+    protected boolean longitudinal;
+    protected int range;
+
     public SlidingPiece() {
         this(Color.WHITE);
     }
@@ -10,7 +16,8 @@ public abstract class SlidingPiece extends ChessPiece {
         super(color);
     }
     @Override
-    boolean move(ChessTile moveTo) {
+    public boolean move(ChessTile moveTo) {
+
         return false;
     }
 }

@@ -31,6 +31,14 @@ public class ChessBoard {
         return getTile(row, col).getPiece();
     }
 
+    public ChessTile getTileByOffset(ChessTile start, int rowOffset, int columnOffset) {
+        int newRow = start.getRow() + rowOffset;
+        int newColumn = start.getColumn() + columnOffset;
+        if (newRow > 7 || newRow < 0) return null;
+        if (newColumn > 7 || newColumn < 0) return null;
+        return board[newRow][newColumn];
+    }
+
 
     private void clearBoard() {
         for (int i = 0; i < BOARD_ROWS; i++) {

@@ -10,7 +10,7 @@ public class Pawn extends ChessPiece{
         super();
     }
     @Override
-    boolean move(ChessTile moveTo) {
+    public boolean move(ChessTile moveTo) {
         return false;
     }
 }

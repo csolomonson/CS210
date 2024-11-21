@@ -39,37 +39,37 @@ public abstract class ChessPiece {
         this.position = position;
     }
 
-    void clearAttackers() {
+    public void clearAttackers() {
         canBeAttacked.clear();
     }
 
-    boolean addAttacker(ChessPiece attacker) {
+    public boolean addAttacker(ChessPiece attacker) {
         if (isAttacker(attacker)) {
             return false;
         }
         return canBeAttacked.add(attacker);
     }
 
-    boolean isAttacker(ChessPiece attacker) {
+    public boolean isAttacker(ChessPiece attacker) {
         return canBeAttacked.contains(attacker);
     }
 
-    void clearTargets() {
+    public void clearTargets() {
         canAttack.clear();
     }
 
-    boolean addTarget(ChessPiece target) {
+    public boolean addTarget(ChessPiece target) {
         if (isTarget(target)) {
             return false;
         }
         return canAttack.add(target);
     }
 
-    boolean isTarget(ChessPiece target) {
+    public boolean isTarget(ChessPiece target) {
         return canAttack.contains(target);
     }
 
-    abstract boolean move(ChessTile moveTo);
+    public abstract boolean move(ChessTile moveTo);
 
     @Override
     public boolean equals(Object o) {
