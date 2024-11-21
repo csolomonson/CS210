@@ -1,6 +1,7 @@
 package com.miracosta.cs210.cs210.chess.board;
 
 import com.miracosta.cs210.cs210.chess.pieces.ChessPiece;
+import com.miracosta.cs210.cs210.chess.pieces.Color;
 
 public class ChessTile {
     private final int row;
@@ -46,6 +47,11 @@ public class ChessTile {
 
     public boolean isOccupied() {
         return (piece != null);
+    }
+
+    public Color getColor() {
+        if (isOccupied()) return getPiece().getColor();
+        return Color.EMPTY;
     }
 
 }
