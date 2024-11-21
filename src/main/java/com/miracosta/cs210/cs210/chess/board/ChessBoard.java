@@ -17,7 +17,7 @@ public class ChessBoard {
         board = new ChessTile[BOARD_ROWS][BOARD_COLUMNS];
         for (int r = 1; r <= BOARD_ROWS; r++) {
             for (int c = 1; c <= BOARD_COLUMNS; c++) {
-                board[r-1][c-1] = new ChessTile(r-1, c-1);
+                board[r-1][c-1] = new ChessTile(r-1, c-1, this);
             }
         }
         resetBoard();

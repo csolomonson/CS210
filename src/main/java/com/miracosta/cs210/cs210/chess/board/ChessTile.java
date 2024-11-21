@@ -7,15 +7,17 @@ public class ChessTile {
     private final int row;
     private final int column;
     private ChessPiece piece;
+    private ChessBoard board;
 
     public ChessTile() {
-        this(1,1);
+        this(1,1, null);
     }
 
-    public ChessTile(int r, int c) {
+    public ChessTile(int r, int c, ChessBoard board) {
         row = r;
         column = c;
         piece = null;
+        this.board = board;
     }
 
     public boolean setPiece(ChessPiece piece) {
@@ -52,6 +54,10 @@ public class ChessTile {
     public Color getColor() {
         if (isOccupied()) return getPiece().getColor();
         return Color.EMPTY;
+    }
+
+    public ChessBoard getBoard() {
+        return board;
     }
 
 }

@@ -11,6 +11,7 @@ public abstract class ChessPiece {
     private final ArrayList<ChessPiece> canAttack;
     private final ArrayList<ChessPiece> canBeAttacked;
     protected final ArrayList<ChessTile> legalMoves;
+    protected ChessBoard board;
 
     //TODO Can't move King into check
     //TODO Can't reveal checks
@@ -45,6 +46,7 @@ public abstract class ChessPiece {
 
     public void setPosition(ChessTile position) {
         this.position = position;
+        board = position.getBoard();
     }
 
     public void clearAttackers() {
@@ -78,10 +80,19 @@ public abstract class ChessPiece {
     }
 
     public  boolean move(ChessTile moveTo) {
-        return false;
+        if (!getLegalMoves().contains(moveTo)) return false;
+        //make the move
+        getPosition().forceSetPiece(null);
+        moveTo.forceSetPiece(this);
+        calculateValidMoves(board);
+        return true;
     }
 
     public abstract void calculateValidMoves(ChessBoard board);
+
+    public ArrayList<ChessTile> getLegalMoves() {
+        return legalMoves;
+    }
 
     protected Color getOppositeColor() {
         if (color == Color.WHITE) return Color.BLACK;
