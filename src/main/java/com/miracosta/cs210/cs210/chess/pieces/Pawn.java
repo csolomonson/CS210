@@ -3,8 +3,6 @@ package com.miracosta.cs210.cs210.chess.pieces;
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
 
-import java.util.ArrayList;
-
 import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
 
 public class Pawn extends ChessPiece{
@@ -16,12 +14,11 @@ public class Pawn extends ChessPiece{
     }
 
     @Override
-    public ArrayList<ChessTile> getValidMoves(ChessBoard board) {
-        ArrayList<ChessTile> moves = new ArrayList<>();
-        if (canDoubleMove()) checkAndAddPush(moves, board, 2);
-        else checkAndAddPush(moves, board, 1);
-        checkAndAddCapture(moves, board);
-        return moves;
+    public void calculateValidMoves(ChessBoard board) {
+        legalMoves.clear();
+        if (canDoubleMove()) checkAndAddPush(board, 2);
+        else checkAndAddPush(board, 1);
+        checkAndAddCapture(board);
     }
 
     private int getPushDirection() {
@@ -29,23 +26,23 @@ public class Pawn extends ChessPiece{
         return 1;
     }
 
-    private void checkAndAddPush(ArrayList<ChessTile> arr, ChessBoard board, int range) {
+    private void checkAndAddPush(ChessBoard board, int range) {
         for (int i = 1; i <= range; i++) {
             ChessTile target = board.getTileByOffset(getPosition(), i * getPushDirection(), 0);
             if (target == null) return;
             if (target.isOccupied()) return;
-            arr.add(target);
+            legalMoves.add(target);
         }
     }
 
-    private void checkAndAddCapture(ArrayList<ChessTile> arr, ChessBoard board) {
+    private void checkAndAddCapture(ChessBoard board) {
         ChessTile leftTarget = board.getTileByOffset(getPosition(), getPushDirection(), -1);
         ChessTile rightTarget = board.getTileByOffset(getPosition(), getPushDirection(), 1);
         if (leftTarget != null) {
-            if (leftTarget.getColor() == getOppositeColor()) arr.add(leftTarget);
+            if (leftTarget.getColor() == getOppositeColor()) legalMoves.add(leftTarget);
         }
         if (rightTarget != null) {
-            if (rightTarget.getColor() == getOppositeColor()) arr.add(rightTarget);
+            if (rightTarget.getColor() == getOppositeColor()) legalMoves.add(rightTarget);
         }
     }
 

@@ -3,8 +3,6 @@ package com.miracosta.cs210.cs210.chess.pieces;
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
 
-import java.util.ArrayList;
-
 public class Knight extends ChessPiece{
     public Knight(Color color) {
         super(color);
@@ -14,22 +12,21 @@ public class Knight extends ChessPiece{
     }
 
     @Override
-    public ArrayList<ChessTile> getValidMoves(ChessBoard board) {
-        ArrayList<ChessTile> moves = new ArrayList<>();
+    public void calculateValidMoves(ChessBoard board) {
+        legalMoves.clear();
         //knights can move every combination of +/-(2,1)
-        addIfInBounds(moves, board, 1, 2);
-        addIfInBounds(moves, board, -1, 2);
-        addIfInBounds(moves, board, 1, -2);
-        addIfInBounds(moves, board, -1, -2);
-        addIfInBounds(moves, board, 2, 1);
-        addIfInBounds(moves, board, -2, 1);
-        addIfInBounds(moves, board, 2, -1);
-        addIfInBounds(moves, board, -2, -1);
+        addIfInBounds(board, 1, 2);
+        addIfInBounds(board, -1, 2);
+        addIfInBounds(board, 1, -2);
+        addIfInBounds(board, -1, -2);
+        addIfInBounds(board, 2, 1);
+        addIfInBounds(board, -2, 1);
+        addIfInBounds(board, 2, -1);
+        addIfInBounds(board, -2, -1);
 
-        return moves;
     }
 
-    private void addIfInBounds(ArrayList<ChessTile> arr, ChessBoard board, int rowOffset, int columnOffset) {
+    private void addIfInBounds(ChessBoard board, int rowOffset, int columnOffset) {
        ChessTile target = board.getTileByOffset(getPosition(), rowOffset, columnOffset);
        if (target == null) return;
        //if we're occupied by a teammate, you can't go there
@@ -37,6 +34,6 @@ public class Knight extends ChessPiece{
            if (target.getPiece().getColor() == getColor()) return;
            //if the color is opposite, we can capture, so the move is legal
        }
-       arr.add(target);
+       legalMoves.add(target);
     }
 }

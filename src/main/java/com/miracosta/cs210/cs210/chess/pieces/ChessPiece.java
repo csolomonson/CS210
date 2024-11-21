@@ -10,6 +10,7 @@ public abstract class ChessPiece {
     private Color color;
     private final ArrayList<ChessPiece> canAttack;
     private final ArrayList<ChessPiece> canBeAttacked;
+    protected final ArrayList<ChessTile> legalMoves;
 
     //TODO Can't move King into check
     //TODO Can't reveal checks
@@ -19,6 +20,7 @@ public abstract class ChessPiece {
     ChessPiece() {
         canAttack = new ArrayList<>();
         canBeAttacked = new ArrayList<>();
+        legalMoves = new ArrayList<>();
         position = new ChessTile();
         color = Color.WHITE;
     }
@@ -79,7 +81,7 @@ public abstract class ChessPiece {
         return false;
     }
 
-    public abstract ArrayList<ChessTile> getValidMoves(ChessBoard board);
+    public abstract void calculateValidMoves(ChessBoard board);
 
     protected Color getOppositeColor() {
         if (color == Color.WHITE) return Color.BLACK;
