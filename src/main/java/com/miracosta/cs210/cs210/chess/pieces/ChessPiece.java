@@ -11,6 +11,14 @@ public abstract class ChessPiece {
     private final ArrayList<ChessPiece> canAttack;
     private final ArrayList<ChessPiece> canBeAttacked;
 
+    //TODO Pawn movement
+    //TODO Knight movement
+    //TODO Can't move King into check
+    //TODO Can't reveal checks
+    //TODO Castling
+    //TODO Pawn moves 2 on first move
+    //TODO En Passant
+    //TODO Promotion
     ChessPiece() {
         canAttack = new ArrayList<>();
         canBeAttacked = new ArrayList<>();
