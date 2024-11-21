@@ -13,9 +13,30 @@ public class Knight extends ChessPiece{
         super();
     }
 
-
     @Override
     public ArrayList<ChessTile> getValidMoves(ChessBoard board) {
-        return null;
+        ArrayList<ChessTile> moves = new ArrayList<>();
+        //knights can move every combination of +/-(2,1)
+        addIfInBounds(moves, board, 1, 2);
+        addIfInBounds(moves, board, -1, 2);
+        addIfInBounds(moves, board, 1, -2);
+        addIfInBounds(moves, board, -1, -2);
+        addIfInBounds(moves, board, 2, 1);
+        addIfInBounds(moves, board, -2, 1);
+        addIfInBounds(moves, board, 2, -1);
+        addIfInBounds(moves, board, -2, -1);
+
+        return moves;
+    }
+
+    private void addIfInBounds(ArrayList<ChessTile> arr, ChessBoard board, int rowOffset, int columnOffset) {
+       ChessTile target = board.getTileByOffset(getPosition(), rowOffset, columnOffset);
+       if (target == null) return;
+       //if we're occupied by a teammate, you can't go there
+       if (target.isOccupied()) {
+           if (target.getPiece().getColor() == getColor()) return;
+           //if the color is opposite, we can capture, so the move is legal
+       }
+       arr.add(target);
     }
 }
