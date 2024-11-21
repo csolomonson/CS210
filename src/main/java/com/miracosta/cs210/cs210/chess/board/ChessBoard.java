@@ -31,6 +31,10 @@ public class ChessBoard {
         return getTile(row, col).getPiece();
     }
 
+    public void setPiece(ChessPiece piece, int row, int col) {
+        getTile(row, col).forceSetPiece(piece);
+    }
+
     public ChessTile getTileByOffset(ChessTile start, int rowOffset, int columnOffset) {
         int newRow = start.getRow() + rowOffset;
         int newColumn = start.getColumn() + columnOffset;
@@ -39,8 +43,18 @@ public class ChessBoard {
         return board[newRow][newColumn];
     }
 
+    public void update() {
+        for (int i = 0; i < BOARD_ROWS; i++) {
+            for (int j = 0; j < BOARD_COLUMNS; j++) {
+                if (board[i][j].isOccupied()) {
+                    board[i][j].getPiece().calculateValidMoves(this);
+                }
+            }
+        }
+    }
 
-    private void clearBoard() {
+
+    public void clearBoard() {
         for (int i = 0; i < BOARD_ROWS; i++) {
             for (int j = 0; j < BOARD_COLUMNS; j++) {
                 board[i][j].clearPiece();

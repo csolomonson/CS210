@@ -82,10 +82,11 @@ public abstract class ChessPiece {
     public  boolean move(ChessTile moveTo) {
         if (!getLegalMoves().contains(moveTo)) return false;
         //make the move
-        getPosition().forceSetPiece(null);
+        getPosition().clearPiece();
         moveTo.forceSetPiece(this);
-        calculateValidMoves(board);
+        board.update();
         return true;
+
     }
 
     public abstract void calculateValidMoves(ChessBoard board);
@@ -97,6 +98,10 @@ public abstract class ChessPiece {
     protected Color getOppositeColor() {
         if (color == Color.WHITE) return Color.BLACK;
         return Color.WHITE;
+    }
+
+    public boolean isLegalMove(int row, int column){
+        return getLegalMoves().contains(new ChessTile(row, column));
     }
 
 
