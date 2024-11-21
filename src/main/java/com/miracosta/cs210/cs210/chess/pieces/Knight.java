@@ -1,6 +1,9 @@
 package com.miracosta.cs210.cs210.chess.pieces;
 
+import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
+
+import java.util.ArrayList;
 
 public class Knight extends ChessPiece{
     public Knight(Color color) {
@@ -10,8 +13,9 @@ public class Knight extends ChessPiece{
         super();
     }
 
+
     @Override
-    public boolean move(ChessTile moveTo) {
-        return false;
+    public ArrayList<ChessTile> getValidMoves(ChessBoard board) {
+        return null;
     }
 }

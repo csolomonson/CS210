@@ -17,34 +17,34 @@ public class ChessTile {
         piece = null;
     }
 
-    boolean setPiece(ChessPiece piece) {
+    public boolean setPiece(ChessPiece piece) {
         if (isOccupied()) return false;
         forceSetPiece(piece);
         return true;
     }
 
-    int getRow() {
+    public int getRow() {
         return row;
     }
 
-    int getColumn() {
+    public int getColumn() {
         return column;
     }
 
-    void forceSetPiece(ChessPiece piece) {
+    public void forceSetPiece(ChessPiece piece) {
         this.piece = piece;
         this.piece.setPosition(this);
     }
 
-    ChessPiece getPiece() {
+    public ChessPiece getPiece() {
         return piece;
     }
 
-    void clearPiece() {
+    public void clearPiece() {
         this.piece = null;
     }
 
-    boolean isOccupied() {
+    public boolean isOccupied() {
         return (piece != null);
     }
 

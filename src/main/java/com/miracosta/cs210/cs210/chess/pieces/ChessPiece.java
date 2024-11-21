@@ -1,5 +1,6 @@
 package com.miracosta.cs210.cs210.chess.pieces;
 
+import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
 
 import java.util.ArrayList;
@@ -69,7 +70,17 @@ public abstract class ChessPiece {
         return canAttack.contains(target);
     }
 
-    public abstract boolean move(ChessTile moveTo);
+    public  boolean move(ChessTile moveTo) {
+        return false;
+    }
+
+    public abstract ArrayList<ChessTile> getValidMoves(ChessBoard board);
+
+    protected Color getOppositeColor() {
+        if (color == Color.WHITE) return Color.BLACK;
+        return Color.WHITE;
+    }
+
 
     @Override
     public boolean equals(Object o) {
