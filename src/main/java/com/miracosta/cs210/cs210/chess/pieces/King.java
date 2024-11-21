@@ -4,4 +4,7 @@ public class King extends SlidingPiece{
     public King(Color color) {
         super(color);
     }
+    public King() {
+        super();
+    }
 }

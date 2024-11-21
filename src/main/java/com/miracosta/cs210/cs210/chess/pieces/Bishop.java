@@ -4,4 +4,7 @@ public class Bishop extends SlidingPiece{
     public Bishop(Color color) {
         super(color);
     }
+    public Bishop() {
+        super();
+    }
 }

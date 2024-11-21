@@ -6,6 +6,10 @@ public class Knight extends ChessPiece{
     public Knight(Color color) {
         super(color);
     }
+    public Knight() {
+        super();
+    }
+
     @Override
     boolean move(ChessTile moveTo) {
         return false;

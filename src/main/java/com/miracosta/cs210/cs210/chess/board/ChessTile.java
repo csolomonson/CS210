@@ -3,8 +3,8 @@ package com.miracosta.cs210.cs210.chess.board;
 import com.miracosta.cs210.cs210.chess.pieces.ChessPiece;
 
 public class ChessTile {
-    private int row;
-    private int column;
+    private final int row;
+    private final int column;
     private ChessPiece piece;
 
     public ChessTile() {

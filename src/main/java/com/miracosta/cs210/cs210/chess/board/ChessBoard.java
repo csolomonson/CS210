@@ -11,7 +11,7 @@ import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
 public class ChessBoard {
     private final int BOARD_ROWS = 8;
     private final int BOARD_COLUMNS = 8;
-    private ChessTile[][] board;
+    private final ChessTile[][] board;
 
     public ChessBoard() {
         board = new ChessTile[BOARD_ROWS][BOARD_COLUMNS];
@@ -44,8 +44,7 @@ public class ChessBoard {
         clearBoard();
         //do the pawns
         for (int i = 0; i < BOARD_COLUMNS; i++) {
-            board[1][i].forceSetPiece(new Pawn(BLACK));
-            board[BOARD_ROWS - 2][i].forceSetPiece(new Pawn(WHITE));
+            setSymmetrical2Way(Pawn.class, 1, i);
         }
         setSymmetrical4Way(Rook.class, 0,0);
         setSymmetrical4Way(Knight.class, 0, 1);
@@ -54,9 +53,9 @@ public class ChessBoard {
         setSymmetrical2Way(King.class, 0, 4);
     }
 
-    private void setSymmetrical4Way(Class PieceType, int row, int col) {
+    private void setSymmetrical4Way(Class<?> PieceType, int row, int col) {
         try {
-            Constructor constructor = PieceType.getDeclaredConstructor(Color.class);
+            Constructor<?> constructor = PieceType.getDeclaredConstructor(Color.class);
             constructor.setAccessible(true);
 
             board[row][col].forceSetPiece((ChessPiece) constructor.newInstance(BLACK));
@@ -67,12 +66,11 @@ public class ChessBoard {
 
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
-            //TODO do this better
         }
     }
 
-    private void setSymmetrical2Way(Class PieceType, int row, int col) {
-        Constructor constructor = null;
+    private void setSymmetrical2Way(Class<?> PieceType, int row, int col) {
+        Constructor<?> constructor = null;
         try {
             constructor = PieceType.getDeclaredConstructor(Color.class);
             constructor.setAccessible(true);

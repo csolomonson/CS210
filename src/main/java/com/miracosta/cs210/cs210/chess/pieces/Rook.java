@@ -4,4 +4,7 @@ public class Rook extends SlidingPiece{
     public Rook(Color color) {
         super(color);
     }
+    public Rook() {
+        super();
+    }
 }

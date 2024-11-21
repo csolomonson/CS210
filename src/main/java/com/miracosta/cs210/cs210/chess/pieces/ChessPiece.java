@@ -1,24 +1,20 @@
 package com.miracosta.cs210.cs210.chess.pieces;
 
-import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public abstract class ChessPiece {
     private ChessTile position;
     private Color color;
     private final ArrayList<ChessPiece> canAttack;
     private final ArrayList<ChessPiece> canBeAttacked;
-    private String type;
 
     ChessPiece() {
         canAttack = new ArrayList<>();
         canBeAttacked = new ArrayList<>();
         position = new ChessTile();
         color = Color.WHITE;
-        type = "Piece";
     }
 
     ChessPiece(Color color) {
