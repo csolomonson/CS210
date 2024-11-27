@@ -16,7 +16,6 @@ public abstract class ChessPiece {
     //TODO Can't move King into check
     //TODO Can't reveal checks
     //TODO Castling
-    //TODO En Passant
     //TODO Promotion
     ChessPiece() {
         canAttack = new ArrayList<>();
@@ -81,6 +80,13 @@ public abstract class ChessPiece {
 
     public  boolean move(ChessTile moveTo) {
         if (!getLegalMoves().contains(moveTo)) return false;
+        //clear piece if en passant-ing
+        if (this instanceof EnPassantPiece epp) {
+            if (epp.isCapturingEnPassant() && epp.getCaptureTile().hasEnPassantablePiece(getOppositeColor())) {
+                epp.getCaptureTile().clearPiece();
+            }
+            epp.updateEnPassantStatus();
+        }
         //make the move
         getPosition().clearPiece();
         moveTo.forceSetPiece(this);

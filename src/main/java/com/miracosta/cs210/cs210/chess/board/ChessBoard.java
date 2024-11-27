@@ -12,6 +12,7 @@ public class ChessBoard {
     private final int BOARD_ROWS = 8;
     private final int BOARD_COLUMNS = 8;
     private final ChessTile[][] board;
+    int moveNumber;
 
     public ChessBoard() {
         board = new ChessTile[BOARD_ROWS][BOARD_COLUMNS];
@@ -21,6 +22,7 @@ public class ChessBoard {
             }
         }
         resetBoard();
+        moveNumber = 0;
     }
 
     public ChessTile getTile(int row, int col) {
@@ -35,6 +37,10 @@ public class ChessBoard {
         getTile(row, col).forceSetPiece(piece);
     }
 
+    public int getMoveNumber() {
+        return moveNumber;
+    }
+
     public ChessTile getTileByOffset(ChessTile start, int rowOffset, int columnOffset) {
         int newRow = start.getRow() + rowOffset;
         int newColumn = start.getColumn() + columnOffset;
@@ -47,7 +53,11 @@ public class ChessBoard {
         for (int i = 0; i < BOARD_ROWS; i++) {
             for (int j = 0; j < BOARD_COLUMNS; j++) {
                 if (board[i][j].isOccupied()) {
-                    board[i][j].getPiece().calculateValidMoves(this);
+                    ChessPiece piece = board[i][j].getPiece();
+                    piece.calculateValidMoves(this);
+                    if (piece instanceof EnPassantPiece) {
+                        ((EnPassantPiece) piece).updateEnPassantStatus();
+                    }
                 }
             }
         }
@@ -62,6 +72,17 @@ public class ChessBoard {
         }
     }
 
+    public boolean move(int row1, int col1, int row2, int col2) {
+        ChessPiece piece = getPiece(row1, col1);
+        if (piece == null) return false;
+        if (piece.move(getTile(row2, col2))) {
+            moveNumber++;
+            update();
+            return true;
+        }
+        return false;
+    }
+
     private void resetBoard() {
         clearBoard();
         //do the pawns
@@ -73,6 +94,7 @@ public class ChessBoard {
         setSymmetrical4Way(Bishop.class, 0, 2);
         setSymmetrical2Way(Queen.class, 0, 3);
         setSymmetrical2Way(King.class, 0, 4);
+        update();
     }
 
     private void setSymmetrical4Way(Class<?> PieceType, int row, int col) {

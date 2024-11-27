@@ -2,6 +2,7 @@ package com.miracosta.cs210.cs210.chess.board;
 
 import com.miracosta.cs210.cs210.chess.pieces.ChessPiece;
 import com.miracosta.cs210.cs210.chess.pieces.Color;
+import com.miracosta.cs210.cs210.chess.pieces.EnPassantPiece;
 
 import java.util.Objects;
 
@@ -66,6 +67,13 @@ public class ChessTile {
 
     public ChessBoard getBoard() {
         return board;
+    }
+
+    public boolean hasEnPassantablePiece(Color pieceColor) {
+        if (!isOccupied()) return false;
+        if (!(piece instanceof EnPassantPiece epp)) return false;
+        if (!(getColor() == pieceColor)) return false;
+        return epp.getEnPassantStatus();
     }
 
     @Override
