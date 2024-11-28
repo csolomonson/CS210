@@ -14,6 +14,12 @@ public class Rook extends SlidingPiece{
         setRookProperties();
     }
 
+    @Override
+    public String toString() {
+        if (getColor() == Color.WHITE) return "♖";
+        return "♜";
+    }
+
     /**
      * Create a WHITE Rook
      */

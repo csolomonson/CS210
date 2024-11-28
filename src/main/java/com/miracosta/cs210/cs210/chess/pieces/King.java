@@ -10,6 +10,13 @@ public class King extends SlidingPiece{
         super(color);
         setKingProperties();
     }
+
+    @Override
+    public String toString() {
+        if (getColor() == Color.WHITE) return "♔";
+        return "♚";
+    }
+
     public King() {
         super();
         setKingProperties();

@@ -21,6 +21,12 @@ public class Queen extends SlidingPiece{
         setQueenProperties();
     }
 
+    @Override
+    public String toString() {
+        if (getColor() == Color.WHITE) return "♕";
+        return "♛";
+    }
+
     /**
      * Set SlidingPiece properties (directions and range of motion)
      */

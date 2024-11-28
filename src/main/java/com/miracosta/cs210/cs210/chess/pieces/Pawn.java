@@ -40,6 +40,12 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
         checkAndAddCapture(board);
     }
 
+    @Override
+    public String toString() {
+        if (getColor() == WHITE) return "♙";
+        return "♟";
+    }
+
     /**
      * Get the direction in which the Pawn can step in the rows
      * @return +1 if the pawn can increase the row position in each step, -1 if the row position can decrease

@@ -158,6 +158,7 @@ public abstract class ChessPiece {
      * @param board The ChessBoard to consider
      */
     public abstract void calculateValidMoves(ChessBoard board);
+    public abstract String toString();
 
     /**
      * Get a list of every ChessTile that this piece can legally move to

@@ -52,6 +52,8 @@ public abstract class SlidingPiece extends ChessPiece {
         }
     }
 
+    public abstract String toString();
+
     /**
      * Check if a tile exists and is not blocked, and add it to the list of legal moves if so
      * @param board board to check for obstacles and boundaries

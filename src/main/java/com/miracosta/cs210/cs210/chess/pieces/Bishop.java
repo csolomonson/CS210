@@ -13,6 +13,12 @@ public class Bishop extends SlidingPiece{
         setBishopProperties();
     }
 
+    @Override
+    public String toString() {
+        if (getColor() == Color.WHITE) return "♗";
+        return "♝";
+    }
+
     /**
      * Create a WHITE Bishop
      */

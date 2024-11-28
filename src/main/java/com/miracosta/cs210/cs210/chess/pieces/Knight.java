@@ -3,6 +3,8 @@ package com.miracosta.cs210.cs210.chess.pieces;
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
 
+import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
+
 /**
  * A Knight that can jump in an L-ish shape
  */
@@ -35,6 +37,12 @@ public class Knight extends ChessPiece{
         addIfInBounds(board, 2, -1);
         addIfInBounds(board, -2, -1);
 
+    }
+
+    @Override
+    public String toString() {
+        if (getColor() == WHITE) return "♘";
+        return "♞";
     }
 
     /**
