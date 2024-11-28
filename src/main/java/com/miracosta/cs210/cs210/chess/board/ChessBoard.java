@@ -16,6 +16,7 @@ public class ChessBoard {
     private final int BOARD_COLUMNS = 8;
     private final ChessTile[][] board;
     int moveNumber;
+    boolean printMoves = false;
 
     /**
      * Sets up a chessboard with the starting position (use clearBoard if you want a blank board)
@@ -41,6 +42,14 @@ public class ChessBoard {
         if (row > 7 || row < 0) return null;
         if (col > 7 || col < 0) return null;
         return board[row][col];
+    }
+
+    /**
+     * Decide whether the board should print a representation of the board state each time a move is made
+     * @param printMoves Whether the board should print at each move
+     */
+    public void setPrintMoves(boolean printMoves) {
+        this.printMoves = printMoves;
     }
 
     /**
@@ -129,9 +138,24 @@ public class ChessBoard {
         if (piece.move(getTile(row2, col2))) {
             moveNumber++;
             update();
+            if (printMoves) System.out.println(this);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        str.append("\n");
+        for (ChessTile[] row : board) {
+            for (ChessTile tile : row) {
+                if (tile.isOccupied()) {
+                    str.append(" ").append(tile.getPiece().toString()).append(" ");
+                } else str.append(" \u2003 ");
+            } str.append("\n");
+        }
+        return str.toString();
     }
 
     /**

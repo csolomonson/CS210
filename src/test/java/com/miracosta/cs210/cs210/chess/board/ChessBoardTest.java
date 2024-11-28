@@ -76,4 +76,9 @@ class ChessBoardTest {
             }
         }
     }
+
+    @Test
+    void testPrint() {
+        System.out.println(board.toString());
+    }
 }

@@ -13,6 +13,7 @@ class EnPassantPieceTest {
     @BeforeEach
     void setup() {
         board = new ChessBoard();
+        board.setPrintMoves(true);
     }
 
     @Test
