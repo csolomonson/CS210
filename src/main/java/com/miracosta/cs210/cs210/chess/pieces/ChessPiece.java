@@ -136,6 +136,7 @@ public abstract class ChessPiece {
      * @return true if the move has been made; false if move is illegal
      */
     public  boolean move(ChessTile moveTo) {
+        if (moveTo == null) return false;
         if (!getLegalMoves().contains(moveTo)) return false;
         //clear piece if en passant-ing
         if (this instanceof EnPassantPiece epp) {
