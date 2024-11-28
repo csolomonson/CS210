@@ -6,6 +6,10 @@ import com.miracosta.cs210.cs210.chess.board.ChessTile;
 import static com.miracosta.cs210.cs210.chess.pieces.Color.BLACK;
 import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
 
+/**
+ * A Pawn that can push forward, capture diagonally, double move on its first move, capture en passant, and be captured en passant
+ * TODO Promotion
+ */
 public class Pawn extends ChessPiece implements EnPassantPiece{
     boolean canBeCapturedEnPassant = false;
     boolean doubleMovable = true;
@@ -13,9 +17,17 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
     boolean capturingEnPassant = false;
     ChessTile enPassantCaptureTile = null;
 
+    /**
+     * Create a Pawn of the given Color
+     * @param color Color of the Pawn
+     */
     public Pawn(Color color) {
         super(color);
     }
+
+    /**
+     * Create a WHITE Pawn
+     */
     public Pawn() {
         super();
     }
@@ -28,11 +40,26 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
         checkAndAddCapture(board);
     }
 
+    @Override
+    public String toString() {
+        if (getColor() == WHITE) return "♙";
+        return "♟";
+    }
+
+    /**
+     * Get the direction in which the Pawn can step in the rows
+     * @return +1 if the pawn can increase the row position in each step, -1 if the row position can decrease
+     */
     private int getPushDirection() {
         if (getColor() == WHITE) return -1;
         return 1;
     }
 
+    /**
+     * Add tiles to the legal move list if they come from the Pawn pushing forward, and are not blocked by either color piece
+     * @param board Current ChessBoard
+     * @param range number of tiles allowed to move (typically 1, can be 2 for first move double move)
+     */
     private void checkAndAddPush(ChessBoard board, int range) {
         for (int i = 1; i <= range; i++) {
             ChessTile target = board.getTileByOffset(getPosition(), i * getPushDirection(), 0);
@@ -42,6 +69,10 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
         }
     }
 
+    /**
+     * Check for diagonal captures and en passant captures, adds them to the legalMoves ArrayList
+     * @param board current ChessBoard
+     */
     private void checkAndAddCapture(ChessBoard board) {
         capturingEnPassant = false;
         ChessTile leftTarget = board.getTileByOffset(getPosition(), getPushDirection(), -1);
@@ -72,6 +103,10 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
         }
     }
 
+    /**
+     * Check if the Pawn is in the right row to be allowed to double move
+     * @return True if the Pawn is in its starting row
+     */
     private boolean canDoubleMove() {
         if (getColor() == WHITE) {
             return getPosition().getRow() == 6;

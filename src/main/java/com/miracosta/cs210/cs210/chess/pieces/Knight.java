@@ -3,10 +3,23 @@ package com.miracosta.cs210.cs210.chess.pieces;
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
 
+import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
+
+/**
+ * A Knight that can jump in an L-ish shape
+ */
 public class Knight extends ChessPiece{
+    /**
+     * Create a Knight of the given Color
+     * @param color Color of the Knight
+     */
     public Knight(Color color) {
         super(color);
     }
+
+    /**
+     * Create a WHITE Knight
+     */
     public Knight() {
         super();
     }
@@ -26,6 +39,18 @@ public class Knight extends ChessPiece{
 
     }
 
+    @Override
+    public String toString() {
+        if (getColor() == WHITE) return "♘";
+        return "♞";
+    }
+
+    /**
+     * Check if an offset results in an in-bounds square that is not occupied by a teammate, and add it to the legalMoves list if so
+     * @param board ChessBoard to check
+     * @param rowOffset difference in rows (+/-)
+     * @param columnOffset difference in columns (+/-)
+     */
     private void addIfInBounds(ChessBoard board, int rowOffset, int columnOffset) {
        ChessTile target = board.getTileByOffset(getPosition(), rowOffset, columnOffset);
        if (target == null) return;
