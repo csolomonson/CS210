@@ -14,9 +14,17 @@ public abstract class SlidingPiece extends ChessPiece {
     protected boolean longitudinal;
     protected int range;
 
+    /**
+     * Generic WHITE SlidingPiece
+     */
     public SlidingPiece() {
         this(Color.WHITE);
     }
+
+    /**
+     * Generic SlidingPiece of a given Color
+     * @param color Color of the SlidingPiece
+     */
     public SlidingPiece(Color color) {
         super(color);
     }

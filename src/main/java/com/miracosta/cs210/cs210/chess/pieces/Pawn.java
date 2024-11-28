@@ -17,9 +17,17 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
     boolean capturingEnPassant = false;
     ChessTile enPassantCaptureTile = null;
 
+    /**
+     * Create a Pawn of the given Color
+     * @param color Color of the Pawn
+     */
     public Pawn(Color color) {
         super(color);
     }
+
+    /**
+     * Create a WHITE Pawn
+     */
     public Pawn() {
         super();
     }
