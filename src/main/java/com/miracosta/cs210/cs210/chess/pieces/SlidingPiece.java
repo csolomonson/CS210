@@ -3,6 +3,10 @@ package com.miracosta.cs210.cs210.chess.pieces;
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
 
+/**
+ * Class to represent pieces that can slide in some direction until they meet another piece or the edge of the board.
+ * Bishops, Rooks, Queens, Kings (Kings simply have an imposed 'range' of 1)
+ */
 public abstract class SlidingPiece extends ChessPiece {
 
     protected boolean diagonal;
@@ -40,6 +44,13 @@ public abstract class SlidingPiece extends ChessPiece {
         }
     }
 
+    /**
+     * Check if a tile exists and is not blocked, and add it to the list of legal moves if so
+     * @param board board to check for obstacles and boundaries
+     * @param rowOffset offset number of rows to check tile
+     * @param colOffset offset number of columns to check tile
+     * @return true if the tile with given offset from this position makes a legal move, and has been added to the set.
+     */
     private boolean checkAndAdd(ChessBoard board, int rowOffset, int colOffset) {
         ChessTile target = board.getTileByOffset(getPosition(), rowOffset, colOffset);
         //if the tile is out of bounds, we can't keep going
