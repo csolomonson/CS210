@@ -140,7 +140,7 @@ public abstract class ChessPiece {
         if (!getLegalMoves().contains(moveTo)) return false;
         //clear piece if en passant-ing
         if (this instanceof EnPassantPiece epp) {
-            if (epp.isCapturingEnPassant() && epp.getCaptureTile().hasEnPassantablePiece(getOppositeColor())) {
+            if (epp.isCapturingEnPassant() && epp.getCaptureTile().hasEnPassantablePiece(getOppositeColor()) && epp.getCaptureTile().equals(moveTo)) {
                 epp.getCaptureTile().clearPiece();
             }
             epp.updateEnPassantStatus();
@@ -150,7 +150,6 @@ public abstract class ChessPiece {
         moveTo.forceSetPiece(this);
         board.update();
         return true;
-
     }
 
     /**
