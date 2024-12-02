@@ -16,6 +16,7 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
     int enPassantMove = -1;
     boolean capturingEnPassant = false;
     ChessTile enPassantCaptureTile = null;
+    ChessTile enPassantLandingTile = null;
 
     /**
      * Create a Pawn of the given Color
@@ -75,6 +76,8 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
      */
     private void checkAndAddCapture(ChessBoard board) {
         capturingEnPassant = false;
+        enPassantCaptureTile = null;
+        enPassantLandingTile = null;
         ChessTile leftTarget = board.getTileByOffset(getPosition(), getPushDirection(), -1);
         ChessTile rightTarget = board.getTileByOffset(getPosition(), getPushDirection(), 1);
         if (leftTarget!= null) {
@@ -92,6 +95,7 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
                 legalMoves.add(leftTarget);
                 capturingEnPassant = true;
                 enPassantCaptureTile = leftEnPassantTarget;
+                enPassantLandingTile = leftTarget;
             }
         }
         if (rightEnPassantTarget != null) {
@@ -99,6 +103,7 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
                 legalMoves.add(rightTarget);
                 capturingEnPassant = true;
                 enPassantCaptureTile = rightEnPassantTarget;
+                enPassantLandingTile = rightTarget;
             }
         }
     }
@@ -147,4 +152,7 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
     public ChessTile getCaptureTile() {
         return enPassantCaptureTile;
     }
+
+    @Override
+    public ChessTile getLandingTile() {return enPassantLandingTile;}
 }
