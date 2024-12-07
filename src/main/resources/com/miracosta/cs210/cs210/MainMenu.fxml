@@ -6,16 +6,19 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="181.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fdfff0" height="187.0" layoutY="-3.0" stroke="#fdfff0" strokeType="INSIDE" width="299.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b1ac93" height="63.0" layoutX="12.0" layoutY="12.0" stroke="#b1ac93" strokeType="INSIDE" width="272.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" prefHeight="81.0" prefWidth="255.0" text="Welcome to Minesweeper Chess!" textAlignment="CENTER" underline="true">
-         <font>
-            <Font name="Berlin Sans FB Demi Bold" size="18.0" />
-         </font>
-      </Label>
-      <Button layoutX="54.0" layoutY="103.0" mnemonicParsing="false" onAction="#handleSinglePlayer" text="Single Player" />
-      <Button layoutX="164.0" layoutY="103.0" mnemonicParsing="false" onAction="#handleMultiplayer" text="Multiplayer" />
-   </children>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="181.0" fx:id="mainMenuPane"
+      prefWidth="299.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.miracosta.cs210.cs210.MenuController">
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fdfff0" height="187.0" layoutY="-3.0" stroke="#fdfff0"
+              strokeType="INSIDE" width="299.0"/>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b1ac93" height="63.0" layoutX="12.0" layoutY="12.0" stroke="#b1ac93"
+              strokeType="INSIDE" width="272.0"/>
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" prefHeight="81.0" prefWidth="255.0"
+          text="Welcome to Minesweeper Chess!" textAlignment="CENTER" underline="true">
+      <font>
+         <Font name="Berlin Sans FB Demi Bold" size="18.0"/>
+      </font>
+   </Label>
+   <Button layoutX="54.0" layoutY="103.0" mnemonicParsing="false" onAction="#handleSinglePlayer" text="Single Player"/>
+   <Button layoutX="164.0" layoutY="103.0" mnemonicParsing="false" onAction="#handleMultiplayer" text="Multiplayer"/>
 </Pane>

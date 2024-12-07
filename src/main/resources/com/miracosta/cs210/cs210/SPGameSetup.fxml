@@ -9,59 +9,68 @@
 <?import javafx.scene.text.Font?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="327.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fdfff0" height="508.0" layoutX="1.0" layoutY="4.0" stroke="#fdfff0" strokeType="INSIDE" width="327.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b1ac93" height="51.0" layoutX="14.0" layoutY="8.0" stroke="#b1ac93" strokeType="INSIDE" width="299.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="2.0" prefHeight="63.0" prefWidth="327.0" text="Game Board Setup" textAlignment="CENTER" underline="true">
-         <font>
-            <Font name="Berlin Sans FB Demi Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="119.0" layoutY="63.0" prefHeight="44.0" prefWidth="88.0" text="Bot Difficulty:">
-         <font>
-            <Font name="Berlin Sans FB Demi Bold" size="14.0" />
-         </font>
-      </Label>
-      <Button layoutX="133.0" layoutY="107.0" mnemonicParsing="false" onAction="#handleMediumDifficulty" text="Medium" />
-      <Button layoutX="79.0" layoutY="107.0" mnemonicParsing="false" onAction="#handleEasyDifficulty" text="Easy" />
-      <Button layoutX="207.0" layoutY="107.0" mnemonicParsing="false" onAction="#handleHardDifficulty" text="Hard" />
-      <Label layoutX="88.0" layoutY="162.0" prefHeight="16.0" prefWidth="150.0" text="Minutes Per Side (1 - 5):">
-         <font>
-            <Font name="Berlin Sans FB Demi Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="minutesTextField" layoutX="89.0" layoutY="178.0" />
-      <Label layoutX="89.0" layoutY="244.0" prefHeight="16.0" prefWidth="150.0" text="Number of Mines (1-10):">
-         <font>
-            <Font name="Berlin Sans FB Demi Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="minesTextField" layoutX="89.0" layoutY="260.0" />
-      <Label layoutX="103.0" layoutY="321.0" prefHeight="16.0" prefWidth="120.0" text="Choose Your Color">
-         <font>
-            <Font name="Berlin Sans FB Demi Bold" size="14.0" />
-         </font>
-      </Label>
-      <Circle fill="WHITE" layoutX="103.0" layoutY="394.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle layoutX="207.0" layoutY="394.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
-      <Button fx:id="whiteColorButton" layoutX="80.0" layoutY="378.0" mnemonicParsing="false" onAction="#handleColorSelection" opacity="0.0" prefHeight="34.0" prefWidth="47.0" text="White" />
-      <Button fx:id="blackColorButton" layoutX="184.0" layoutY="378.0" mnemonicParsing="false" onAction="#handleColorSelection" opacity="0.0" prefHeight="34.0" prefWidth="47.0" text="Black" />
-      <Label layoutX="87.0" layoutY="386.0" text="White" />
-      <Label layoutX="193.0" layoutY="385.0" text="Black" textFill="WHITE" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b1ac93" height="34.0" layoutX="63.0" layoutY="456.0" stroke="#b1ac93" strokeType="INSIDE" width="82.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b1ac93" height="34.0" layoutX="167.0" layoutY="456.0" stroke="#b1ac93" strokeType="INSIDE" width="82.0" />
-      <Label layoutX="89.0" layoutY="451.0" prefHeight="44.0" prefWidth="39.0" text="Back">
-         <font>
-            <Font name="Berlin Sans FB Demi Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="193.0" layoutY="451.0" prefHeight="44.0" prefWidth="39.0" text="Start">
-         <font>
-            <Font name="Berlin Sans FB Demi Bold" size="14.0" />
-         </font>
-      </Label>
-      <Button layoutX="67.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleBackToMenu" opacity="0.0" prefHeight="34.0" prefWidth="75.0" text="Back" />
-      <Button layoutX="171.0" layoutY="456.0" mnemonicParsing="false" onAction="#handleStartGame" opacity="0.0" prefHeight="34.0" prefWidth="75.0" text="Start" />
-   </children>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0"
+      prefWidth="327.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.miracosta.cs210.cs210.SinglePlayerController">
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fdfff0" height="508.0" layoutX="1.0" layoutY="4.0" stroke="#fdfff0"
+              strokeType="INSIDE" width="327.0"/>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b1ac93" height="51.0" layoutX="14.0" layoutY="8.0" stroke="#b1ac93"
+              strokeType="INSIDE" width="299.0"/>
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutY="2.0" prefHeight="63.0" prefWidth="327.0"
+          text="Game Board Setup" textAlignment="CENTER" underline="true">
+      <font>
+         <Font name="Berlin Sans FB Demi Bold" size="18.0"/>
+      </font>
+   </Label>
+   <Label layoutX="119.0" layoutY="63.0" prefHeight="44.0" prefWidth="88.0" text="Bot Difficulty:">
+      <font>
+         <Font name="Berlin Sans FB Demi Bold" size="14.0"/>
+      </font>
+   </Label>
+   <Button layoutX="133.0" layoutY="107.0" mnemonicParsing="false" onAction="#handleMediumDifficulty" text="Medium"/>
+   <Button layoutX="79.0" layoutY="107.0" mnemonicParsing="false" onAction="#handleEasyDifficulty" text="Easy"/>
+   <Button layoutX="207.0" layoutY="107.0" mnemonicParsing="false" onAction="#handleHardDifficulty" text="Hard"/>
+   <Label layoutX="88.0" layoutY="162.0" prefHeight="16.0" prefWidth="150.0" text="Minutes Per Side (1 - 5):">
+      <font>
+         <Font name="Berlin Sans FB Demi Bold" size="14.0"/>
+      </font>
+   </Label>
+   <TextField fx:id="minutesTextField" layoutX="89.0" layoutY="178.0"/>
+   <Label layoutX="89.0" layoutY="244.0" prefHeight="16.0" prefWidth="150.0" text="Number of Mines (1-10):">
+      <font>
+         <Font name="Berlin Sans FB Demi Bold" size="14.0"/>
+      </font>
+   </Label>
+   <TextField fx:id="minesTextField" layoutX="89.0" layoutY="260.0"/>
+   <Label layoutX="103.0" layoutY="321.0" prefHeight="16.0" prefWidth="120.0" text="Choose Your Color">
+      <font>
+         <Font name="Berlin Sans FB Demi Bold" size="14.0"/>
+      </font>
+   </Label>
+   <Circle fill="WHITE" layoutX="103.0" layoutY="394.0" radius="30.0" stroke="BLACK" strokeType="INSIDE"/>
+   <Circle layoutX="207.0" layoutY="394.0" radius="30.0" stroke="BLACK" strokeType="INSIDE"/>
+   <Button fx:id="whiteColorButton" layoutX="80.0" layoutY="378.0" mnemonicParsing="false"
+           onAction="#handleColorSelection" opacity="0.0" prefHeight="34.0" prefWidth="47.0" text="White"/>
+   <Button fx:id="blackColorButton" layoutX="184.0" layoutY="378.0" mnemonicParsing="false"
+           onAction="#handleColorSelection" opacity="0.0" prefHeight="34.0" prefWidth="47.0" text="Black"/>
+   <Label layoutX="87.0" layoutY="386.0" text="White"/>
+   <Label layoutX="193.0" layoutY="385.0" text="Black" textFill="WHITE"/>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b1ac93" height="34.0" layoutX="63.0" layoutY="456.0"
+              stroke="#b1ac93" strokeType="INSIDE" width="82.0"/>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b1ac93" height="34.0" layoutX="167.0" layoutY="456.0"
+              stroke="#b1ac93" strokeType="INSIDE" width="82.0"/>
+   <Label layoutX="89.0" layoutY="451.0" prefHeight="44.0" prefWidth="39.0" text="Back">
+      <font>
+         <Font name="Berlin Sans FB Demi Bold" size="14.0"/>
+      </font>
+   </Label>
+   <Label layoutX="193.0" layoutY="451.0" prefHeight="44.0" prefWidth="39.0" text="Start">
+      <font>
+         <Font name="Berlin Sans FB Demi Bold" size="14.0"/>
+      </font>
+   </Label>
+   <Button layoutX="67.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleBackToMenu" opacity="0.0"
+           prefHeight="34.0" prefWidth="75.0" text="Back"/>
+   <Button layoutX="171.0" layoutY="456.0" mnemonicParsing="false" onAction="#handleStartGame" opacity="0.0"
+           prefHeight="34.0" prefWidth="75.0" text="Start"/>
 </Pane>
