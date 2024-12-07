@@ -13,11 +13,13 @@ public class SinglePlayerController {
 
     @FXML
     void handleBackToMenu() {
-
+        AssetManager assets = AssetManager.getInstance();
+        assets.stage.setScene(assets.mainMenu);
     }
     @FXML
     void handleStartGame() {
-
+        AssetManager assets = AssetManager.getInstance();
+        assets.stage.setScene(assets.game);
     }
 
     public void handleMediumDifficulty(ActionEvent event) {

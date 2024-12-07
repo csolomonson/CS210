@@ -10,7 +10,8 @@ public class GameApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         assets = AssetManager.getInstance();
-        Scene scene = new Scene(assets.mainMenu);
+        assets.stage = stage;
+        Scene scene = assets.mainMenu;
         stage.setScene(scene);
         stage.show();
     }

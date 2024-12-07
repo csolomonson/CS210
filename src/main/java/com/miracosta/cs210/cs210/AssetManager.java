@@ -2,6 +2,8 @@ package com.miracosta.cs210.cs210;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -10,10 +12,11 @@ import java.io.IOException;
  */
 public class AssetManager {
     private static AssetManager instance;
-    public Parent mainMenu;
-    public Parent spMenu;
-    public Parent mpMenu;
-    public Parent game;
+    public Scene mainMenu;
+    public Scene spMenu;
+    public Scene mpMenu;
+    public Scene game;
+    public Stage stage;
 
     private AssetManager() {
         loadFXAssets();
@@ -28,22 +31,22 @@ public class AssetManager {
 
     private void loadFXAssets() {
         try {
-            mainMenu = new FXMLLoader(GameApplication.class.getResource("MainMenu.fxml")).load();
+            mainMenu = new Scene(new FXMLLoader(GameApplication.class.getResource("MainMenu.fxml")).load(), 299, 187);
         } catch (IOException e) {
             System.out.println("main menu");
         }
         try {
-            spMenu = new FXMLLoader(GameApplication.class.getResource("SPGameSetup.fxml")).load();
+            spMenu = new Scene(new FXMLLoader(GameApplication.class.getResource("SPGameSetup.fxml")).load(),327,508);
         } catch (IOException e) {
             System.out.println("sp");
         }
         try {
-            mpMenu = new FXMLLoader(GameApplication.class.getResource("MPGameSetup.fxml")).load();
+            mpMenu = new Scene(new FXMLLoader(GameApplication.class.getResource("MPGameSetup.fxml")).load(),327,512);
         } catch (IOException e) {
             System.out.println("mp");
         }
         try {
-            game = new FXMLLoader(GameApplication.class.getResource("chessBoard.fxml")).load();
+            game = new Scene(new FXMLLoader(GameApplication.class.getResource("chessBoard.fxml")).load(), 910, 689);
         } catch (IOException e) {
             System.out.println("game");
         }
