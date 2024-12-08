@@ -2,6 +2,7 @@ package com.miracosta.cs210.cs210.chess.pieces;
 
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
+import javafx.scene.image.Image;
 
 import static com.miracosta.cs210.cs210.chess.pieces.Color.BLACK;
 import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
@@ -45,6 +46,12 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
     public String toString() {
         if (getColor() == WHITE) return "♙";
         return "♟";
+    }
+
+    @Override
+    public Image getImage() {
+        if (getColor() == WHITE) return imageManager.whitePawn;
+        return imageManager.blackPawn;
     }
 
     /**
