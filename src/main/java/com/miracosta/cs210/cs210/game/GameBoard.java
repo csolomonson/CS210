@@ -2,8 +2,11 @@ package com.miracosta.cs210.cs210.game;
 
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
+import com.miracosta.cs210.cs210.chess.pieces.ChessPiece;
 import com.miracosta.cs210.cs210.minesweeper.MinesweeperBoard;
 import com.miracosta.cs210.cs210.minesweeper.MinesweeperTile;
+
+import java.util.ArrayList;
 
 public class GameBoard {
     private final int NUM_ROWS = 8;
@@ -51,6 +54,9 @@ public class GameBoard {
         return getGameTile(chessTile.getRow(), chessTile.getColumn());
     }
 
+    public ArrayList<ChessPiece> getChessPieces() {
+        return chessBoard.getPieces();
+    }
     public GameTile getGameTile(MinesweeperTile minesweeperTile) {
         return getGameTile(minesweeperTile.getRow(), minesweeperTile.getColumn());
     }

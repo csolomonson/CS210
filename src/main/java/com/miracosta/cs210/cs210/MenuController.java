@@ -11,13 +11,13 @@ public class MenuController {
 
     @FXML
     void handleSinglePlayer() {
-        AssetManager assets = AssetManager.getInstance();
+        SceneManager assets = SceneManager.getInstance();
         assets.stage.setScene(assets.spMenu);
     }
 
     @FXML
     void handleMultiplayer() {
-        AssetManager assets = AssetManager.getInstance();
+        SceneManager assets = SceneManager.getInstance();
         assets.stage.setScene(assets.mpMenu);
     }
 }

@@ -1,7 +1,6 @@
 package com.miracosta.cs210.cs210;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -10,21 +9,21 @@ import java.io.IOException;
 /**
  * Singleton class to handle loading of FX and image resources
  */
-public class AssetManager {
-    private static AssetManager instance;
+public class SceneManager {
+    private static SceneManager instance;
     public Scene mainMenu;
     public Scene spMenu;
     public Scene mpMenu;
     public Scene game;
     public Stage stage;
 
-    private AssetManager() {
+    private SceneManager() {
         loadFXAssets();
     }
 
-    public static AssetManager getInstance() {
+    public static SceneManager getInstance() {
         if (instance == null) {
-            instance = new AssetManager();
+            instance = new SceneManager();
         }
         return instance;
     }

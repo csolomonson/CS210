@@ -4,6 +4,7 @@ import com.miracosta.cs210.cs210.chess.pieces.*;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import static com.miracosta.cs210.cs210.chess.pieces.Color.BLACK;
 import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
@@ -142,6 +143,21 @@ public class ChessBoard {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Get an ArrayList of all pieces on this board
+     * @return all pieces on this board
+     */
+    public ArrayList<ChessPiece> getPieces() {
+        ArrayList<ChessPiece> arr = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                ChessTile tile = board[i][j];
+                if (tile.isOccupied()) arr.add(tile.getPiece());
+            }
+        }
+        return arr;
     }
 
     @Override
