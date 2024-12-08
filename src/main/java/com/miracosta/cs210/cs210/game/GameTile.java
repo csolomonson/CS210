@@ -69,7 +69,9 @@ public class GameTile {
         minesweeperTile.trigger();
     }
 
-
+    public void disarm() {
+        minesweeperTile.disarm();
+    }
     public int getCol() {
         return col;
     }

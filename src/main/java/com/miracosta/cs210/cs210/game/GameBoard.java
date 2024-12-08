@@ -22,6 +22,11 @@ public class GameBoard {
         for (int i = 0; i < NUM_ROWS; i++) {
             for (int j = 0; j < NUM_COLS; j++) {
                 board[i][j] = new GameTile(i,j,this);
+
+                if (chessBoard.getTile(i,j).isOccupied()) {
+                    board[i][j].disarm();
+                    board[i][j].trigger();
+                }
             }
         }
     }

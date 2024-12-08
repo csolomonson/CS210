@@ -91,6 +91,10 @@ public class MinesweeperTile {
         }
     }
 
+    public void disarm() {
+        if (bombState == BombState.ACTIVE_BOMB) bombState = BombState.INACTIVE_BOMB;
+    }
+
     private void activate() {
         tileState = TileState.UNCOVERED;
         bombState = BombState.ACTIVE_BOMB;
