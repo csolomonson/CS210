@@ -7,8 +7,6 @@ import com.miracosta.cs210.cs210.game.GameTile;
 import com.miracosta.cs210.cs210.minesweeper.MinesweeperTile;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -17,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class GameController {
@@ -102,48 +101,49 @@ public class GameController {
         }
     }
 
-    public Label getMinesweeperNumber(int r, int c) {
+    public Text getMinesweeperNumber(int r, int c) {
         GameTile tile = board.getGameTile(r, c);
         int n = tile.getSurroundingBombs();
-        Label label = new Label(Integer.toString(n));
-        label.setFont(new Font(50));
-        label.setAlignment(Pos.CENTER);
-        label.setLayoutX(X_OFFSET + SQUARE_WIDTH / 2 - 15 + c * SQUARE_WIDTH);
-        label.setLayoutY(Y_OFFSET + SQUARE_HEIGHT / 2 - 35 + r * SQUARE_HEIGHT);
+        Text number = new Text(Integer.toString(n));
+        number.setFont(new Font(50));
+        number.setLayoutX(X_OFFSET + SQUARE_WIDTH / 2 - 14 + c * SQUARE_WIDTH);
+        number.setLayoutY(Y_OFFSET + SQUARE_HEIGHT / 2 + 17 + r * SQUARE_HEIGHT);
+        number.setStroke(Color.WHITE);
+        number.setStrokeWidth(1);
         switch (n) {
             case 1:
-                label.setTextFill(Color.BLUE);
+                number.setFill(Color.BLUE);
                 break;
             case 2:
-                label.setTextFill(Color.GREEN);
+                number.setFill(Color.GREEN);
                 break;
             case 3:
-                label.setTextFill(Color.RED);
+                number.setFill(Color.RED);
                 break;
             case 4:
-                label.setTextFill(Color.DARKBLUE);
+                number.setFill(Color.DARKBLUE);
                 break;
             case 5:
-                label.setTextFill(Color.BROWN);
+                number.setFill(Color.BROWN);
                 break;
             case 6:
-                label.setTextFill(Color.CYAN);
+                number.setFill(Color.CYAN);
                 break;
             case 7:
-                label.setTextFill(Color.BLACK);
+                number.setFill(Color.BLACK);
                 break;
             case 8:
-                label.setTextFill(Color.GREY);
+                number.setFill(Color.GREY);
                 break;
             default:
-                label.setTextFill(Color.GRAY);
+                number.setFill(Color.GRAY);
         }
-        label.toFront();
-        return label;
+        number.toFront();
+        return number;
     }
 
     public void clearNumbers() {
-        anchorPane.getChildren().removeIf(node -> node.getClass() == Label.class);
+        anchorPane.getChildren().removeIf(node -> node.getClass() == Text.class);
     }
 
     public void drawBurns() {
