@@ -4,6 +4,9 @@ package com.miracosta.cs210.cs210;
 import com.miracosta.cs210.cs210.chess.pieces.ChessPiece;
 import com.miracosta.cs210.cs210.game.GameBoard;
 import com.miracosta.cs210.cs210.game.GameTile;
+import com.miracosta.cs210.cs210.minesweeper.MinesweeperTile;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 
 public class GameController {
 
@@ -43,7 +47,9 @@ public class GameController {
     public void handleRestartGame() {
         board = new GameBoard();
         removeHighlights();
+        clearNumbers();
         updateBoard();
+
     }
 
     public void drawBoard() {
@@ -58,6 +64,7 @@ public class GameController {
 
     public void updateBoard() {
         clearBoard();
+        drawBurns();
         drawBoard();
         updateMinesweeper();
     }
@@ -138,6 +145,17 @@ public class GameController {
         anchorPane.getChildren().removeIf(node -> node.getClass() == Label.class);
     }
 
+    public void drawBurns() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (board.getGameTile(i,j).getDisplayState() == GameTile.MinesweeperDisplayState.CRATER) {
+                    renderImage(ImageManager.getInstance().burn, i, j, 67);
+                }
+            }
+        }
+    }
+
+
     public void handleSurrendering() {
         updateBoard();
     }
@@ -183,6 +201,7 @@ public class GameController {
     }
 
     public void tileClicked(int r, int c) {
+        boolean explode = board.getGameTile(r, c).getMinesweeperTile().getBombState() == MinesweeperTile.BombState.ACTIVE_BOMB;
         if (selection == null) {
             selection = board.getGameTile(r, c);
             highlightLegalMoves(r, c);
@@ -192,6 +211,15 @@ public class GameController {
             selection = null;
             removeHighlights();
             updateBoard();
+            if (explode) {
+                Timeline beat = new Timeline(
+                        new KeyFrame(Duration.ZERO, _ -> renderImage(ImageManager.getInstance().explosion, r, c, 70)),
+                        new KeyFrame(Duration.seconds(0.5), _ -> updateBoard())
+                );
+                beat.setAutoReverse(true);
+                beat.setCycleCount(1);
+                beat.play();
+            }
         } else {
             selection = board.getGameTile(r,c);
             removeHighlights();

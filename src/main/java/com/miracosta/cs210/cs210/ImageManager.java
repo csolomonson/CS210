@@ -21,6 +21,7 @@ public class ImageManager {
     public Image bomb;
     public Image flag;
     public Image explosion;
+    public Image burn;
 
     private static ImageManager instance;
     private ImageManager() {
@@ -48,6 +49,7 @@ public class ImageManager {
         bomb = loadImage("bomb.png");
         flag = loadImage("flag.png");
         explosion = loadImage("bang.png");
+        burn = loadImage("burn.png");
     }
     private Image loadImage(String name) {
         return new Image(Objects.requireNonNull(getClass().getResource(name)).toExternalForm());
