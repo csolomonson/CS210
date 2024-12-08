@@ -100,8 +100,11 @@ public class MinesweeperBoard {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < NUM_ROWS; i++) {
             for (int j = 0; j<NUM_COLS; j++) {
-                if (board[i][j].getBombState() == MinesweeperTile.BombState.NO_BOMB) s.append("-");
-                else s.append("*");
+                if (board[i][j].getBombState() == MinesweeperTile.BombState.NO_BOMB) {
+                    s.append(board[i][j].getSurroundingBombs());
+                    s.append(" ");
+                }
+                else s.append("* ");
             }
             s.append("\n");
         }

@@ -77,6 +77,42 @@ public class MinesweeperTile {
         }
     }
 
+    public void trigger() {
+        switch (bombState) {
+            case NO_BOMB:
+                uncover();
+                break;
+            case ACTIVE_BOMB:
+                explode();
+                break;
+            case INACTIVE_BOMB:
+                activate();
+                break;
+        }
+    }
+
+    private void activate() {
+        tileState = TileState.UNCOVERED;
+        bombState = BombState.ACTIVE_BOMB;
+    }
+
+    private void explode() {
+        tileState = TileState.UNCOVERED;
+        bombState = BombState.EXPLODED_BOMB;
+    }
+
+    private void uncover() {
+        if (tileState != TileState.UNCOVERED) {
+            tileState = TileState.UNCOVERED;
+            if (surroundingBombs == 0 && bombState == BombState.NO_BOMB) {
+                for (MinesweeperTile neighbor : neighbors) {
+                    neighbor.trigger();
+                }
+            }
+        }
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
