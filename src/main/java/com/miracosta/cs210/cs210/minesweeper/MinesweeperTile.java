@@ -112,6 +112,13 @@ public class MinesweeperTile {
         }
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return col;
+    }
 
     @Override
     public boolean equals(Object o) {
