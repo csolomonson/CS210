@@ -6,8 +6,8 @@
 <?import javafx.scene.text.*?>
 
 <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="689.0" prefWidth="910.0" text="Minesweeper Chess" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.miracosta.cs210.cs210.GameController">
-    <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="568.0" prefWidth="897.0">
-        <GridPane  gridLinesVisible="true" layoutX="77.0" layoutY="64.0" prefHeight="535.0" prefWidth="535.0">
+    <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" onMouseClicked="#handleBoardClicked" prefHeight="568.0" prefWidth="897.0">
+        <GridPane gridLinesVisible="true" layoutX="77.0" layoutY="64.0" prefHeight="535.0" prefWidth="535.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
