@@ -39,6 +39,14 @@ public class GameBoard {
         return board[row][col];
     }
 
+    public boolean move(int row1, int col1, int row2, int col2) {
+        if (chessBoard.move(row1, col1, row2, col2)) {
+            getGameTile(row2, col2).trigger();
+            return true;
+        }
+        return false;
+    }
+
     public GameTile getGameTile(ChessTile chessTile) {
         return getGameTile(chessTile.getRow(), chessTile.getColumn());
     }

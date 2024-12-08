@@ -120,6 +120,10 @@ public class MinesweeperTile {
         return col;
     }
 
+    public TileState getTileState() {
+        return tileState;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
