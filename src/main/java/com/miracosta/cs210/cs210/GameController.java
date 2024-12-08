@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
@@ -196,8 +197,17 @@ public class GameController {
 
         if (tileX >= 0 && tileX < 8 && tileY >= 0 && tileY < 8) {
             //System.out.println(tileX + " " + tileY);
-            tileClicked(tileY, tileX);
+            if (mouseEvent.getButton()  == MouseButton.SECONDARY) {
+                addFlag(tileY, tileX);
+            } else tileClicked(tileY, tileX);
         }
+
+    }
+
+    public void addFlag(int r, int c) {
+        board.getGameTile(r,c).flag();
+        updateBoard();
+        updateMinesweeper();
     }
 
     public void tileClicked(int r, int c) {

@@ -63,10 +63,14 @@ public class GameTile {
     public void trigger() {
         if (minesweeperTile.getBombState() == MinesweeperTile.BombState.ACTIVE_BOMB) {
             chessTile.clearPiece();
-            System.out.println("Explosion at " + row + ", " + col + "!");
+            //System.out.println("Explosion at " + row + ", " + col + "!");
             chessTile.getBoard().update();
         }
         minesweeperTile.trigger();
+    }
+
+    public void flag() {
+        minesweeperTile.flag();
     }
 
     public void disarm() {
