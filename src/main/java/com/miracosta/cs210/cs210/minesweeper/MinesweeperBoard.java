@@ -3,6 +3,7 @@ package com.miracosta.cs210.cs210.minesweeper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * An 8x8 minesweeper board
@@ -82,4 +83,28 @@ public class MinesweeperBoard {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MinesweeperBoard that = (MinesweeperBoard) o;
+        return numBombs == that.numBombs && Objects.deepEquals(board, that.board);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numBombs, Arrays.deepHashCode(board));
+    }
+
+    public String getBombMap() {
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < NUM_ROWS; i++) {
+            for (int j = 0; j<NUM_COLS; j++) {
+                if (board[i][j].getBombState() == MinesweeperTile.BombState.NO_BOMB) s.append("-");
+                else s.append("*");
+            }
+            s.append("\n");
+        }
+        return s.toString();
+    }
 }

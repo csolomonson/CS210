@@ -1,6 +1,7 @@
 package com.miracosta.cs210.cs210.minesweeper;
 
 import java.util.HashSet;
+import java.util.Objects;
 
 /**
  * A single tile on a minesweeper board
@@ -76,4 +77,16 @@ public class MinesweeperTile {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MinesweeperTile that = (MinesweeperTile) o;
+        return row == that.row && col == that.col && getBombState() == that.getBombState() && tileState == that.tileState;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, col);
+    }
 }
