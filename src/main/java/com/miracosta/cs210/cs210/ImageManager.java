@@ -18,6 +18,10 @@ public class ImageManager {
     public Image blackBishop;
     public Image blackPawn;
 
+    public Image bomb;
+    public Image flag;
+    public Image explosion;
+
     private static ImageManager instance;
     private ImageManager() {
         loadImages();
@@ -41,6 +45,9 @@ public class ImageManager {
         whiteQueen = loadImage("white_queen.png");
         whiteRook = loadImage("white_rook.png");
 
+        bomb = loadImage("bomb.png");
+        flag = loadImage("flag.png");
+        explosion = loadImage("bang.png");
     }
     private Image loadImage(String name) {
         return new Image(Objects.requireNonNull(getClass().getResource(name)).toExternalForm());
