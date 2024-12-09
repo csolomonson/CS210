@@ -10,14 +10,14 @@ import java.util.ArrayList;
 /**
  * Generic class for any type of chess piece (Pawn, Knight, Bishop, Rook, Queen, King)
  */
-public abstract class ChessPiece {
+public abstract class ChessPiece implements Cloneable{
     private ChessTile position;
     private Color color;
-    private final ArrayList<ChessPiece> canAttack;
+    private ArrayList<ChessPiece> canAttack;
     private final ArrayList<ChessPiece> canBeAttacked;
     protected final ArrayList<ChessTile> legalMoves;
     protected ChessBoard board;
-    protected ImageManager imageManager;
+    //protected ImageManager imageManager;
 
     //TODO Can't move King into check
     //TODO Can't reveal checks
@@ -33,7 +33,7 @@ public abstract class ChessPiece {
         legalMoves = new ArrayList<>();
         position = new ChessTile();
         color = Color.WHITE;
-        imageManager = ImageManager.getInstance();
+        //imageManager = ImageManager.getInstance();
     }
 
     /**
@@ -203,5 +203,28 @@ public abstract class ChessPiece {
         if (o == null || getClass() != o.getClass()) return false;
         ChessPiece that = (ChessPiece) o;
         return getColor() == that.getColor();
+    }
+
+    @Override
+    public ChessPiece clone() {
+        try {
+            ChessPiece clone = (ChessPiece) super.clone();
+            clone.setColor(getColor());
+            clone.canAttack.clear();
+            clone.canBeAttacked.clear();
+            clone.legalMoves.clear();
+            clone.position = null;
+
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
+    public ChessPiece oppositeClone() {
+        ChessPiece clone = clone();
+        if (getColor() == Color.WHITE) clone.setColor(Color.BLACK);
+        else clone.setColor(Color.WHITE);
+        return clone;
     }
 }

@@ -5,6 +5,8 @@ import com.miracosta.cs210.cs210.chess.pieces.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 import static com.miracosta.cs210.cs210.chess.pieces.Color.BLACK;
 import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
@@ -12,11 +14,25 @@ import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
 /**
  * An entire chessboard, made of ChessTiles that might contain ChessPieces
  */
-public class ChessBoard {
+public class ChessBoard implements Cloneable {
     private final int BOARD_ROWS = 8;
     private final int BOARD_COLUMNS = 8;
-    private final ChessTile[][] board;
+    private ChessTile[][] board;
     int moveNumber;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChessBoard that = (ChessBoard) o;
+        return Objects.deepEquals(board, that.board) && turnToMove == that.turnToMove && toString().equals(that.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(BOARD_ROWS, BOARD_COLUMNS, Arrays.deepHashCode(board), turnToMove);
+    }
+
     boolean printMoves = false;
     private Color turnToMove;
 
@@ -194,55 +210,60 @@ public class ChessBoard {
         clearBoard();
         //do the pawns
         for (int i = 0; i < BOARD_COLUMNS; i++) {
-            setSymmetrical2Way(Pawn.class, 1, i);
+            setSymmetrical2Way(new Pawn(BLACK), 1, i);
         }
-        setSymmetrical4Way(Rook.class, 0,0);
-        setSymmetrical4Way(Knight.class, 0, 1);
-        setSymmetrical4Way(Bishop.class, 0, 2);
-        setSymmetrical2Way(Queen.class, 0, 3);
-        setSymmetrical2Way(King.class, 0, 4);
+        setSymmetrical4Way(new Rook(BLACK), 0,0);
+        setSymmetrical4Way(new Knight(BLACK), 0, 1);
+        setSymmetrical4Way(new Bishop(BLACK), 0, 2);
+        setSymmetrical2Way(new Queen(BLACK), 0, 3);
+        setSymmetrical2Way(new King(BLACK), 0, 4);
         update();
     }
 
     /**
      * Set 4 pieces, mirrored across rows and columns (useful for setting rooks, knights, and bishops in starting pos)
-     * @param PieceType Class of piece to set in 4 location
+     * @param piece piece to duplicate and set at all four positions (with inverted color for inverted row)
      * @param row Row of location of a BLACK piece in one quadrant
      * @param col Column of location of a piece in one quadrant
      */
-    private void setSymmetrical4Way(Class<?> PieceType, int row, int col) {
-        try {
-            Constructor<?> constructor = PieceType.getDeclaredConstructor(Color.class);
-            constructor.setAccessible(true);
-
-            board[row][col].forceSetPiece((ChessPiece) constructor.newInstance(BLACK));
-            board[row][BOARD_COLUMNS - 1 - col].forceSetPiece((ChessPiece) constructor.newInstance(BLACK));
-
-            board[BOARD_ROWS - 1 - row][col].forceSetPiece((ChessPiece) constructor.newInstance(WHITE));
-            board[BOARD_ROWS - 1 - row][BOARD_COLUMNS - 1 - col].forceSetPiece((ChessPiece) constructor.newInstance(WHITE));
-
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
+    private void setSymmetrical4Way(ChessPiece piece, int row, int col) {
+        setSymmetrical2Way(piece, row, col);
+        setSymmetrical2Way(piece.clone(), row, BOARD_COLUMNS - 1 - col);
     }
 
     /**
      * Adds a BLACK piece to the given location, and a WHITE piece in the corresponding mirrored location
-     * @param PieceType Class of the pieces to set
+     * @param piece ChessPiece to duplicate and set (with the opposite piece inverted color)
      * @param row row for the BLACK piece (0->h, 7->a)
      * @param col column for the BLACK piece (0->1, 7->8)
      */
-    private void setSymmetrical2Way(Class<?> PieceType, int row, int col) {
-        Constructor<?> constructor = null;
-        try {
-            constructor = PieceType.getDeclaredConstructor(Color.class);
-            constructor.setAccessible(true);
-            board[row][col].forceSetPiece((ChessPiece) constructor.newInstance(BLACK));
-            board[BOARD_ROWS - 1 - row][col].forceSetPiece((ChessPiece) constructor.newInstance(WHITE));
-        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-
+    private void setSymmetrical2Way(ChessPiece piece, int row, int col) {
+        setPiece(piece, row, col);
+        setPiece(piece.oppositeClone(), BOARD_ROWS - 1 - row, col);
     }
 
+    @Override
+    public ChessBoard clone() {
+        ChessBoard clone;
+        try {
+            clone = (ChessBoard) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        clone.turnToMove = this.turnToMove;
+        clone.moveNumber = this.moveNumber;
+        clone.printMoves = this.printMoves;
+        clone.board = new ChessTile[BOARD_ROWS][BOARD_COLUMNS];
+        for (int i = 0; i < BOARD_ROWS; i++) {
+            for (int j = 0; j < BOARD_COLUMNS; j++) {
+                clone.board[i][j] = board[i][j].clone();
+                if (getPiece(i,j) != null) {
+                    clone.board[i][j].forceSetPiece(board[i][j].getPiece().clone());
+                }
+            }
+        }
+        clone.update();
+        return clone;
+
+    }
 }

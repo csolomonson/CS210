@@ -8,13 +8,29 @@ import com.miracosta.cs210.cs210.minesweeper.MinesweeperBoard;
 import com.miracosta.cs210.cs210.minesweeper.MinesweeperTile;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class GameBoard {
+public class GameBoard implements Cloneable {
     private final int NUM_ROWS = 8;
     private final int NUM_COLS = 8;
-    private final ChessBoard chessBoard;
-    private final MinesweeperBoard minesweeperBoard;
+    private ChessBoard chessBoard;
+    private MinesweeperBoard minesweeperBoard;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameBoard gameBoard = (GameBoard) o;
+        return Objects.equals(getChessBoard(), gameBoard.getChessBoard()) && Objects.equals(getMinesweeperBoard(), gameBoard.getMinesweeperBoard());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getChessBoard(), getMinesweeperBoard());
+    }
+
     private GameTile[][] board;
+    GameBoard previous;
 
     public GameBoard(int numBombs) {
         chessBoard = new ChessBoard();
@@ -49,6 +65,7 @@ public class GameBoard {
     }
 
     public boolean move(int row1, int col1, int row2, int col2) {
+        previous = clone();
         if (chessBoard.move(row1, col1, row2, col2)) {
             getGameTile(row2, col2).trigger();
             return true;
@@ -69,5 +86,23 @@ public class GameBoard {
 
     public Color getColorToMove() {
         return chessBoard.getColorToMove();
+    }
+
+    @Override
+    public GameBoard clone() {
+        try {
+            GameBoard clone = (GameBoard) super.clone();
+            clone.chessBoard = chessBoard.clone();
+            clone.minesweeperBoard = minesweeperBoard.clone();
+            clone.previous = this.previous;
+            for (int i = 0; i < NUM_ROWS; i++) {
+                for (int j = 0; j < NUM_COLS; j++) {
+                    board[i][j] = new GameTile(i, j, clone);
+                }
+            }
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

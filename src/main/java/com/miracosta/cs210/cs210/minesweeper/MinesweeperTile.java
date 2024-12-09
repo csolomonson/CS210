@@ -6,7 +6,23 @@ import java.util.Objects;
 /**
  * A single tile on a minesweeper board
  */
-public class MinesweeperTile {
+public class MinesweeperTile implements Cloneable {
+    @Override
+    public MinesweeperTile clone() {
+        try {
+            MinesweeperTile clone = (MinesweeperTile) super.clone();
+            clone.neighbors.clear();
+            clone.tileState = tileState;
+            clone.bombState = bombState;
+            clone.surroundingBombs = 0;
+            clone.row = row;
+            clone.col = col;
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
     public enum BombState {
         NO_BOMB, ACTIVE_BOMB, INACTIVE_BOMB, EXPLODED_BOMB
     }
@@ -36,6 +52,10 @@ public class MinesweeperTile {
         this.board = board;
         surroundingBombs = 0;
         tileState = TileState.UNMARKED;
+    }
+
+    public void setBoard(MinesweeperBoard board) {
+        this.board = board;
     }
 
     /**
