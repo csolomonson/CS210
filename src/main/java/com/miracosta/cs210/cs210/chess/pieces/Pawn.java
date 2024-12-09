@@ -1,5 +1,6 @@
 package com.miracosta.cs210.cs210.chess.pieces;
 
+import com.miracosta.cs210.cs210.ImageManager;
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
 import javafx.scene.image.Image;
@@ -11,7 +12,7 @@ import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
  * A Pawn that can push forward, capture diagonally, double move on its first move, capture en passant, and be captured en passant
  * TODO Promotion
  */
-public class Pawn extends ChessPiece implements EnPassantPiece{
+public class Pawn extends ChessPiece implements EnPassantPiece, Cloneable{
     boolean canBeCapturedEnPassant = false;
     boolean doubleMovable = true;
     int enPassantMove = -1;
@@ -50,6 +51,7 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
 
     @Override
     public Image getImage() {
+        ImageManager imageManager = ImageManager.getInstance();
         if (getColor() == WHITE) return imageManager.whitePawn;
         return imageManager.blackPawn;
     }
@@ -162,4 +164,17 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
 
     @Override
     public ChessTile getLandingTile() {return enPassantLandingTile;}
+
+    @Override
+    public Pawn clone() {
+        Pawn clone = (Pawn) super.clone();
+        if (capturingEnPassant) {
+            clone.enPassantLandingTile = enPassantLandingTile.clone();
+            clone.enPassantCaptureTile = enPassantCaptureTile.clone();
+            clone.capturingEnPassant = capturingEnPassant;
+            clone.canBeCapturedEnPassant = canBeCapturedEnPassant;
+            clone.enPassantMove = enPassantMove;
+        }
+        return clone;
+    }
 }

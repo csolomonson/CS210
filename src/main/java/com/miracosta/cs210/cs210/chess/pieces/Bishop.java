@@ -1,5 +1,6 @@
 package com.miracosta.cs210.cs210.chess.pieces;
 
+import com.miracosta.cs210.cs210.ImageManager;
 import javafx.scene.image.Image;
 
 /**
@@ -23,6 +24,7 @@ public class Bishop extends SlidingPiece{
 
     @Override
     public Image getImage() {
+        ImageManager imageManager = ImageManager.getInstance();
         if (getColor() == Color.WHITE) return imageManager.whiteBishop;
         return imageManager.blackBishop;
     }

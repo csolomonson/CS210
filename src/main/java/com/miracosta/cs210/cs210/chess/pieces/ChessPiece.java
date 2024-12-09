@@ -10,14 +10,14 @@ import java.util.ArrayList;
 /**
  * Generic class for any type of chess piece (Pawn, Knight, Bishop, Rook, Queen, King)
  */
-public abstract class ChessPiece {
+public abstract class ChessPiece implements Cloneable {
     private ChessTile position;
     private Color color;
-    private final ArrayList<ChessPiece> canAttack;
-    private final ArrayList<ChessPiece> canBeAttacked;
-    protected final ArrayList<ChessTile> legalMoves;
+    private ArrayList<ChessPiece> canAttack;
+    private ArrayList<ChessPiece> canBeAttacked;
+    protected ArrayList<ChessTile> legalMoves;
     protected ChessBoard board;
-    protected ImageManager imageManager;
+    //protected ImageManager imageManager;
 
     //TODO Can't move King into check
     //TODO Can't reveal checks
@@ -33,11 +33,12 @@ public abstract class ChessPiece {
         legalMoves = new ArrayList<>();
         position = new ChessTile();
         color = Color.WHITE;
-        imageManager = ImageManager.getInstance();
+        //imageManager = ImageManager.getInstance();
     }
 
     /**
      * Initializes a generic piece of the specified color
+     *
      * @param color Color enum for this piece
      */
     ChessPiece(Color color) {
@@ -47,6 +48,7 @@ public abstract class ChessPiece {
 
     /**
      * Get this piece's color
+     *
      * @return Color enum representing this piece's color
      */
     public Color getColor() {
@@ -55,6 +57,7 @@ public abstract class ChessPiece {
 
     /**
      * Change the color of this piece
+     *
      * @param color new Color enum
      */
     public void setColor(Color color) {
@@ -63,6 +66,7 @@ public abstract class ChessPiece {
 
     /**
      * Get ChessTile representation of current board position
+     *
      * @return ChessTile that this piece is on
      */
     public ChessTile getPosition() {
@@ -71,6 +75,7 @@ public abstract class ChessPiece {
 
     /**
      * Set this piece's position (and board)
+     *
      * @param position ChessTile to put this piece on
      */
     public void setPosition(ChessTile position) {
@@ -87,6 +92,7 @@ public abstract class ChessPiece {
 
     /**
      * Add a piece that can capture this piece (to be used for minimax)
+     *
      * @param attacker Piece of opposite color that could capture this piece on the next move
      * @return true if a new attacker was added, false if it already existed.
      */
@@ -99,6 +105,7 @@ public abstract class ChessPiece {
 
     /**
      * Check if a given piece is attacking this piece (for minimax and checks)
+     *
      * @param attacker Piece that might attack this piece
      * @return whether the given piece can capture this piece in one move
      */
@@ -115,6 +122,7 @@ public abstract class ChessPiece {
 
     /**
      * Add a piece to the list of pieces that this piece can capture in one move (for minimax)
+     *
      * @param target Piece that this Piece can capture
      * @return true if this adds a new piece
      */
@@ -127,6 +135,7 @@ public abstract class ChessPiece {
 
     /**
      * Check if a piece can be captured by this piece in one move
+     *
      * @param target Piece that can possibly be captured by this piece
      * @return True if this piece can capture the given piece in one move
      */
@@ -136,10 +145,11 @@ public abstract class ChessPiece {
 
     /**
      * Check if a move is legal, and move if so
+     *
      * @param moveTo ChessTile representation of target position
      * @return true if the move has been made; false if move is illegal
      */
-    public  boolean move(ChessTile moveTo) {
+    public boolean move(ChessTile moveTo) {
         if (moveTo == null) return false;
         if (!getLegalMoves().contains(moveTo)) return false;
         //clear piece if en passant-ing
@@ -152,20 +162,41 @@ public abstract class ChessPiece {
         //make the move
         getPosition().clearPiece();
         moveTo.forceSetPiece(this);
-        board.update();
+        //board.update();
         return true;
     }
 
     /**
      * Look at the board and make a list of the moves this piece can legally make
+     *
      * @param board The ChessBoard to consider
      */
     public abstract void calculateValidMoves(ChessBoard board);
+
     public abstract String toString();
+
     public abstract Image getImage();
+
+
+    public void removeCheckingMoves() {
+        ArrayList<ChessTile> toRemove = new ArrayList<>();
+        for (int i = 0; i < legalMoves.size(); i++) {
+            ChessTile move = legalMoves.get(i);
+            ChessBoard hypothetical = board.hypotheticalMove(position.getRow(), position.getColumn(), move.getRow(), move.getColumn());
+            if (hypothetical.getCheck(getColor())) {
+                toRemove.add(move);
+                //System.out.println("A MOVE THAT SHOULD BE REMOVED WAS FOUND");
+            }
+        }
+        for (ChessTile move : toRemove) {
+            legalMoves.remove(move);//System.out.println(this + "CAN NOT LEGALLY MOVE TO " + move.getRow() +", " + move.getColumn());
+        }
+        //System.out.println(legalMoves.size());
+    }
 
     /**
      * Get a list of every ChessTile that this piece can legally move to
+     *
      * @return ArrayList of legal ending positions (captures included)
      */
     public ArrayList<ChessTile> getLegalMoves() {
@@ -174,6 +205,7 @@ public abstract class ChessPiece {
 
     /**
      * Get the color of the opponents
+     *
      * @return BLACK if this piece is WHITE, WHITE if this piece is BLACK
      */
     protected Color getOppositeColor() {
@@ -183,17 +215,19 @@ public abstract class ChessPiece {
 
     /**
      * Check if a tile can legally be moved to
-     * @param row row position of tile to check
+     *
+     * @param row    row position of tile to check
      * @param column column position of tile to check
      * @return True if this piece can legally move to (row, column) on this move.
      */
-    public boolean isLegalMove(int row, int column){
+    public boolean isLegalMove(int row, int column) {
         return getLegalMoves().contains(new ChessTile(row, column));
     }
 
     /**
      * Checks if two pieces are the same type.
      * e.g. All BLACK Rooks are equal to each other, regardless of position.
+     *
      * @param o Object to check for equality
      * @return True if Object is the same color and piece type
      */
@@ -203,5 +237,42 @@ public abstract class ChessPiece {
         if (o == null || getClass() != o.getClass()) return false;
         ChessPiece that = (ChessPiece) o;
         return getColor() == that.getColor();
+    }
+
+    @Override
+    public ChessPiece clone() {
+        try {
+            ChessPiece clone = (ChessPiece) super.clone();
+            clone.setColor(getColor());
+            clone.canAttack = new ArrayList<>();
+            clone.canBeAttacked = new ArrayList<>();
+            clone.legalMoves = new ArrayList<>();
+            clone.position = null;
+
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
+    public ChessPiece oppositeClone() {
+        ChessPiece clone = clone();
+        if (getColor() == Color.WHITE) clone.setColor(Color.BLACK);
+        else clone.setColor(Color.WHITE);
+        return clone;
+    }
+
+    public Color lookForChecks() {
+        for (ChessTile tile : legalMoves) {
+            //no need to even look if the opponent is already in check
+            if (board.getCheck(getOppositeColor())) return Color.EMPTY;
+            if (tile.isOccupied()) {
+                if (tile.getPiece() instanceof King && tile.getPiece().getColor() == getOppositeColor()) {
+                    //System.out.println("CHECK FROM " + this);
+                    return getOppositeColor();
+                }
+            }
+        }
+        return Color.EMPTY;
     }
 }

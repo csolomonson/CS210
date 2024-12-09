@@ -8,12 +8,12 @@ import java.util.Objects;
 /**
  * An 8x8 minesweeper board
  */
-public class MinesweeperBoard {
+public class MinesweeperBoard implements Cloneable {
     private final int NUM_ROWS = 8;
     private final int NUM_COLS = 8;
 
     private final int numBombs;
-    private final MinesweeperTile[][] board;
+    private MinesweeperTile[][] board;
 
     /**
      * Create a fully connected 8x8 board with the given number of bombs
@@ -109,5 +109,23 @@ public class MinesweeperBoard {
             s.append("\n");
         }
         return s.toString();
+    }
+
+    @Override
+    public MinesweeperBoard clone() {
+        try {
+            MinesweeperBoard clone = (MinesweeperBoard) super.clone();
+            clone.board = new MinesweeperTile[NUM_ROWS][NUM_COLS];
+            for (int i = 0; i < NUM_ROWS; i++) {
+                for (int j = 0; j < NUM_COLS; j++) {
+                    clone.board[i][j] = board[i][j].clone();
+                    clone.board[i][j].setBoard(clone);
+                }
+            }
+            clone.calculateNeighbors();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

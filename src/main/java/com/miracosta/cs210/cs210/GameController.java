@@ -40,8 +40,10 @@ public class GameController {
     }
 
     public void handleUndoMove() {
-        clearBoard();
         removeHighlights();
+        if (board.getPrevious() != null) board = board.getPrevious();
+        board.getChessBoard().update();
+        updateBoard();
     }
 
     public void handleRestartGame() {
@@ -80,6 +82,7 @@ public class GameController {
     }
 
     public void updateMinesweeper() {
+        clearNumbers();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 renderMinesweeperTile(i,j);

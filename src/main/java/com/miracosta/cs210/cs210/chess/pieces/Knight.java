@@ -1,5 +1,6 @@
 package com.miracosta.cs210.cs210.chess.pieces;
 
+import com.miracosta.cs210.cs210.ImageManager;
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
 import javafx.scene.image.Image;
@@ -48,6 +49,7 @@ public class Knight extends ChessPiece{
 
     @Override
     public Image getImage() {
+        ImageManager imageManager = ImageManager.getInstance();
         if (getColor() == WHITE) return imageManager.whiteKnight;
         return imageManager.blackKnight;
     }

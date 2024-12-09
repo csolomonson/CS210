@@ -13,7 +13,7 @@ import java.util.Objects;
  * (row 0, col 7) is h8.
  * (row 0, col 0) is a8.
  */
-public class ChessTile {
+public class ChessTile implements Cloneable {
     private final int row;
     private final int column;
     private ChessPiece piece;
@@ -146,4 +146,12 @@ public class ChessTile {
         return getRow() == chessTile.getRow() && getColumn() == chessTile.getColumn();
     }
 
+    @Override
+    public ChessTile clone() {
+        try {
+            return (ChessTile) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }
