@@ -1,7 +1,9 @@
 package com.miracosta.cs210.cs210.chess.pieces;
 
+import com.miracosta.cs210.cs210.ImageManager;
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
@@ -15,6 +17,7 @@ public abstract class ChessPiece {
     private final ArrayList<ChessPiece> canBeAttacked;
     protected final ArrayList<ChessTile> legalMoves;
     protected ChessBoard board;
+    protected ImageManager imageManager;
 
     //TODO Can't move King into check
     //TODO Can't reveal checks
@@ -30,6 +33,7 @@ public abstract class ChessPiece {
         legalMoves = new ArrayList<>();
         position = new ChessTile();
         color = Color.WHITE;
+        imageManager = ImageManager.getInstance();
     }
 
     /**
@@ -158,6 +162,7 @@ public abstract class ChessPiece {
      */
     public abstract void calculateValidMoves(ChessBoard board);
     public abstract String toString();
+    public abstract Image getImage();
 
     /**
      * Get a list of every ChessTile that this piece can legally move to
