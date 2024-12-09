@@ -32,4 +32,11 @@ public interface EnPassantPiece {
      * @return Null if there is no en passant-able piece. Else, the ChessTile where the piece is located
      */
     ChessTile getCaptureTile();
+
+    /**
+     * Get the tile that the en passant-ing piece will land on
+     * Use this to check if an en passant capture is actually being made (and remove the captured piece)
+     * @return The ChessTile that the en passant-ing piece will land on if it captures en passant
+     */
+    ChessTile getLandingTile();
 }

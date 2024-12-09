@@ -81,6 +81,18 @@ class EnPassantPieceTest {
         assertFalse(board.move(4,1,5,0));
     }
 
+    @Test void checkWeDontDeletePiecesThatWerentSupposedToBeDeleted() {
+        board.setPiece(new Pawn(BLACK), 4,1);
+        board.update();
+        //double move the white pawn
+        assertTrue(board.move(6,0,4,0));
+        //don't capture with black pawn, but do move it
+        assertTrue(board.move(4,1,5,1));
+        //make sure the piece didn't get captured
+        assertEquals(new Pawn(), board.getPiece(4,0));
+    }
+
+
 
 
 

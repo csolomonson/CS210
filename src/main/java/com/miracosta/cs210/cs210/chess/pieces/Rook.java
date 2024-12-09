@@ -1,5 +1,7 @@
 package com.miracosta.cs210.cs210.chess.pieces;
 
+import javafx.scene.image.Image;
+
 /**
  * Rook piece that can move laterally and longitudinally
  * TODO castling
@@ -18,6 +20,12 @@ public class Rook extends SlidingPiece{
     public String toString() {
         if (getColor() == Color.WHITE) return "♖";
         return "♜";
+    }
+
+    @Override
+    public Image getImage() {
+        if (getColor() == Color.WHITE) return imageManager.whiteRook;
+        return imageManager.blackRook;
     }
 
     /**

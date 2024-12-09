@@ -2,6 +2,7 @@ package com.miracosta.cs210.cs210.chess.pieces;
 
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
+import javafx.scene.image.Image;
 
 import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
 
@@ -43,6 +44,12 @@ public class Knight extends ChessPiece{
     public String toString() {
         if (getColor() == WHITE) return "♘";
         return "♞";
+    }
+
+    @Override
+    public Image getImage() {
+        if (getColor() == WHITE) return imageManager.whiteKnight;
+        return imageManager.blackKnight;
     }
 
     /**

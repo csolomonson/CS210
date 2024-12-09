@@ -2,6 +2,7 @@ package com.miracosta.cs210.cs210.chess.pieces;
 
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
+import javafx.scene.image.Image;
 
 import static com.miracosta.cs210.cs210.chess.pieces.Color.BLACK;
 import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
@@ -16,6 +17,7 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
     int enPassantMove = -1;
     boolean capturingEnPassant = false;
     ChessTile enPassantCaptureTile = null;
+    ChessTile enPassantLandingTile = null;
 
     /**
      * Create a Pawn of the given Color
@@ -44,6 +46,12 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
     public String toString() {
         if (getColor() == WHITE) return "♙";
         return "♟";
+    }
+
+    @Override
+    public Image getImage() {
+        if (getColor() == WHITE) return imageManager.whitePawn;
+        return imageManager.blackPawn;
     }
 
     /**
@@ -75,6 +83,8 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
      */
     private void checkAndAddCapture(ChessBoard board) {
         capturingEnPassant = false;
+        enPassantCaptureTile = null;
+        enPassantLandingTile = null;
         ChessTile leftTarget = board.getTileByOffset(getPosition(), getPushDirection(), -1);
         ChessTile rightTarget = board.getTileByOffset(getPosition(), getPushDirection(), 1);
         if (leftTarget!= null) {
@@ -92,6 +102,7 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
                 legalMoves.add(leftTarget);
                 capturingEnPassant = true;
                 enPassantCaptureTile = leftEnPassantTarget;
+                enPassantLandingTile = leftTarget;
             }
         }
         if (rightEnPassantTarget != null) {
@@ -99,6 +110,7 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
                 legalMoves.add(rightTarget);
                 capturingEnPassant = true;
                 enPassantCaptureTile = rightEnPassantTarget;
+                enPassantLandingTile = rightTarget;
             }
         }
     }
@@ -147,4 +159,7 @@ public class Pawn extends ChessPiece implements EnPassantPiece{
     public ChessTile getCaptureTile() {
         return enPassantCaptureTile;
     }
+
+    @Override
+    public ChessTile getLandingTile() {return enPassantLandingTile;}
 }
