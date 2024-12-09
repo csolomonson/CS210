@@ -15,6 +15,8 @@ public class GameBoard implements Cloneable {
     private final int NUM_COLS = 8;
     private ChessBoard chessBoard;
     private MinesweeperBoard minesweeperBoard;
+    private GameTile[][] board;
+    GameBoard previous;
 
     @Override
     public boolean equals(Object o) {
@@ -28,9 +30,6 @@ public class GameBoard implements Cloneable {
     public int hashCode() {
         return Objects.hash(getChessBoard(), getMinesweeperBoard());
     }
-
-    private GameTile[][] board;
-    GameBoard previous;
 
     public GameBoard(int numBombs) {
         chessBoard = new ChessBoard();
@@ -46,6 +45,10 @@ public class GameBoard implements Cloneable {
                 }
             }
         }
+    }
+
+    public GameBoard getPrevious() {
+        return previous;
     }
 
     public GameBoard() {
@@ -65,9 +68,11 @@ public class GameBoard implements Cloneable {
     }
 
     public boolean move(int row1, int col1, int row2, int col2) {
-        previous = clone();
+        GameBoard clone = clone();
         if (chessBoard.move(row1, col1, row2, col2)) {
+            previous = clone;
             getGameTile(row2, col2).trigger();
+            chessBoard.update();
             return true;
         }
         return false;
@@ -94,10 +99,11 @@ public class GameBoard implements Cloneable {
             GameBoard clone = (GameBoard) super.clone();
             clone.chessBoard = chessBoard.clone();
             clone.minesweeperBoard = minesweeperBoard.clone();
-            clone.previous = this.previous;
+            if (previous != null)  clone.previous = this.previous.clone();
+            clone.board = new GameTile[NUM_ROWS][NUM_COLS];
             for (int i = 0; i < NUM_ROWS; i++) {
                 for (int j = 0; j < NUM_COLS; j++) {
-                    board[i][j] = new GameTile(i, j, clone);
+                    clone.board[i][j] = new GameTile(i, j, clone);
                 }
             }
             return clone;

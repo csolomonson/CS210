@@ -14,8 +14,8 @@ public abstract class ChessPiece implements Cloneable{
     private ChessTile position;
     private Color color;
     private ArrayList<ChessPiece> canAttack;
-    private final ArrayList<ChessPiece> canBeAttacked;
-    protected final ArrayList<ChessTile> legalMoves;
+    private  ArrayList<ChessPiece> canBeAttacked;
+    protected  ArrayList<ChessTile> legalMoves;
     protected ChessBoard board;
     //protected ImageManager imageManager;
 
@@ -210,9 +210,9 @@ public abstract class ChessPiece implements Cloneable{
         try {
             ChessPiece clone = (ChessPiece) super.clone();
             clone.setColor(getColor());
-            clone.canAttack.clear();
-            clone.canBeAttacked.clear();
-            clone.legalMoves.clear();
+            clone.canAttack = new ArrayList<>();
+            clone.canBeAttacked = new ArrayList<>();
+            clone.legalMoves = new ArrayList<>();
             clone.position = null;
 
             return clone;

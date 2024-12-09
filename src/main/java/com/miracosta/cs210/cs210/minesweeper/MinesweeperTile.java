@@ -11,7 +11,7 @@ public class MinesweeperTile implements Cloneable {
     public MinesweeperTile clone() {
         try {
             MinesweeperTile clone = (MinesweeperTile) super.clone();
-            clone.neighbors.clear();
+            clone.neighbors = new HashSet<>();
             clone.tileState = tileState;
             clone.bombState = bombState;
             clone.surroundingBombs = 0;

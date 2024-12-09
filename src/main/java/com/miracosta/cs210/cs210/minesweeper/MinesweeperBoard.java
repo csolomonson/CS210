@@ -13,7 +13,7 @@ public class MinesweeperBoard implements Cloneable {
     private final int NUM_COLS = 8;
 
     private final int numBombs;
-    private final MinesweeperTile[][] board;
+    private MinesweeperTile[][] board;
 
     /**
      * Create a fully connected 8x8 board with the given number of bombs
@@ -115,6 +115,7 @@ public class MinesweeperBoard implements Cloneable {
     public MinesweeperBoard clone() {
         try {
             MinesweeperBoard clone = (MinesweeperBoard) super.clone();
+            clone.board = new MinesweeperTile[NUM_ROWS][NUM_COLS];
             for (int i = 0; i < NUM_ROWS; i++) {
                 for (int j = 0; j < NUM_COLS; j++) {
                     clone.board[i][j] = board[i][j].clone();
