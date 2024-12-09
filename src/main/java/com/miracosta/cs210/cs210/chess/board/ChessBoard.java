@@ -2,14 +2,11 @@ package com.miracosta.cs210.cs210.chess.board;
 
 import com.miracosta.cs210.cs210.chess.pieces.*;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static com.miracosta.cs210.cs210.chess.pieces.Color.BLACK;
-import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
+import static com.miracosta.cs210.cs210.chess.pieces.Color.*;
 
 /**
  * An entire chessboard, made of ChessTiles that might contain ChessPieces
@@ -19,6 +16,10 @@ public class ChessBoard implements Cloneable {
     private final int BOARD_COLUMNS = 8;
     private ChessTile[][] board;
     int moveNumber;
+    boolean whiteCheck;
+    boolean blackCheck;
+    boolean printMoves = false;
+    private Color turnToMove;
 
     @Override
     public boolean equals(Object o) {
@@ -33,9 +34,23 @@ public class ChessBoard implements Cloneable {
         return Objects.hash(BOARD_ROWS, BOARD_COLUMNS, Arrays.deepHashCode(board), turnToMove);
     }
 
-    boolean printMoves = false;
-    private Color turnToMove;
+    public void setCheck(Color color) {
+        if (color == WHITE) whiteCheck = true;
+        else if (color == BLACK) blackCheck = true;
+    }
 
+    public boolean getCheck(Color color) {
+        if (color == WHITE) return whiteCheck;
+        return blackCheck;
+    }
+
+    public ChessBoard hypotheticalMove(int r1, int c1, int r2, int c2) {
+        ChessBoard clone = clone();
+        clone.update(false);
+        clone.move(r1,c1,r2,c2, false);
+        clone.lookForChecks();
+        return clone;
+    }
     /**
      * Sets up a chessboard with the starting position (use clearBoard if you want a blank board)
      */
@@ -118,7 +133,8 @@ public class ChessBoard implements Cloneable {
     /**
      * Recalculate legal moves, en passant status, and castling legibility (eventually) for all pieces
      */
-    public void update() {
+    public void update(boolean removeChecks) {
+        whiteCheck = blackCheck = false;
         for (int i = 0; i < BOARD_ROWS; i++) {
             for (int j = 0; j < BOARD_COLUMNS; j++) {
                 if (board[i][j].isOccupied()) {
@@ -127,7 +143,31 @@ public class ChessBoard implements Cloneable {
                     if (piece instanceof EnPassantPiece) {
                         ((EnPassantPiece) piece).updateEnPassantStatus();
                     }
+                    setCheck(piece.lookForChecks());
+
                 }
+            }
+        }
+        if (removeChecks) removeCheckingMoves();
+    }
+
+    public void lookForChecks() {
+        whiteCheck = blackCheck = false;
+        for (int i = 0; i < BOARD_ROWS; i++) {
+            for (int j = 0; j < BOARD_COLUMNS; j++) {
+                if (board[i][j].isOccupied()) setCheck(board[i][j].getPiece().lookForChecks());
+            }
+        }
+    }
+
+    public void update() {
+        update(true);
+    }
+
+    public void removeCheckingMoves() {
+        for (int i = 0; i < BOARD_ROWS; i++) {
+            for (int j = 0; j < BOARD_COLUMNS; j++) {
+                if (board[i][j].isOccupied()) board[i][j].getPiece().removeCheckingMoves();
             }
         }
     }
@@ -151,18 +191,22 @@ public class ChessBoard implements Cloneable {
      * @param col2 column of target square
      * @return True if the move was made; false if the move is illegal or invalid
      */
-    public boolean move(int row1, int col1, int row2, int col2) {
+    public boolean move(int row1, int col1, int row2, int col2, boolean removeChecks) {
         ChessPiece piece = getPiece(row1, col1);
         if (piece == null) return false;
         if (piece.getColor() != turnToMove) return false;
         if (piece.move(getTile(row2, col2))) {
             moveNumber++;
             toggleMoveTurn();
-            update();
+            update(removeChecks);
             if (printMoves) System.out.println(this);
             return true;
         }
         return false;
+    }
+
+    public boolean move(int row1, int col1, int row2, int col2) {
+        return move(row1, col1, row2, col2, true);
     }
 
     public void toggleMoveTurn() {
@@ -209,8 +253,8 @@ public class ChessBoard implements Cloneable {
     private void resetBoard() {
         clearBoard();
         //do the pawns
-        for (int i = 0; i < BOARD_COLUMNS; i++) {
-            setSymmetrical2Way(new Pawn(BLACK), 1, i);
+        for (int i = 0; i < BOARD_COLUMNS / 2; i++) {
+            setSymmetrical4Way(new Pawn(BLACK), 1, i);
         }
         setSymmetrical4Way(new Rook(BLACK), 0,0);
         setSymmetrical4Way(new Knight(BLACK), 0, 1);
@@ -256,13 +300,13 @@ public class ChessBoard implements Cloneable {
         clone.board = new ChessTile[BOARD_ROWS][BOARD_COLUMNS];
         for (int i = 0; i < BOARD_ROWS; i++) {
             for (int j = 0; j < BOARD_COLUMNS; j++) {
-                clone.board[i][j] = board[i][j].clone();
+                clone.board[i][j] = new ChessTile(i,j,clone);
                 if (getPiece(i,j) != null) {
                     clone.board[i][j].forceSetPiece(board[i][j].getPiece().clone());
                 }
             }
         }
-        clone.update();
+        //clone.update(false);
         return clone;
 
     }

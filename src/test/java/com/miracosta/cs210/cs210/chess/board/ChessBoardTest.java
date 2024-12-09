@@ -81,4 +81,57 @@ class ChessBoardTest {
     void testPrint() {
         System.out.println(board.toString());
     }
+
+    @Test
+    void testHypotheticalMove() {
+        ChessBoard hypothetical = board.hypotheticalMove(6, 4, 4, 4);
+        assertNotEquals(board, hypothetical);
+        board.move(6,4,4,4);
+        assertEquals(board, hypothetical);
+    }
+
+    @Test
+    void testHypotheticalChecks() {
+        assertTrue(board.move(7,1,5,2));
+        assertTrue(board.move(1,4,3,4));
+        assertTrue(board.move(5,2,7,1));
+        assertTrue(board.move(0,3,4,7));
+
+        ChessBoard hypothetical = board.hypotheticalMove(6,5,5,5);
+        hypothetical.getPiece(4,7).getLegalMoves();
+        System.out.println(hypothetical);
+        assertNull(hypothetical.getPiece(6,5));
+        assertEquals(new Pawn(), hypothetical.getPiece(5,5));
+
+        assertTrue(hypothetical.getCheck(Color.WHITE));
+
+    }
+
+    @Test
+    void testChecks() {
+        assertTrue(board.move(7,1,5,2));
+        assertTrue(board.move(1,4,3,4));
+        assertTrue(board.move(6,5,5,5));
+        assertTrue(board.move(0,3,4,7));
+
+        System.out.println(board);
+
+        assertTrue(board.getCheck(Color.WHITE));
+
+        ChessBoard block = board.hypotheticalMove(6,6,5,6);
+        System.out.println("BLOCK:");
+        System.out.println(block);
+        assertNull(block.getPiece(6,6));
+        assertEquals(new Pawn(), block.getPiece(5,6));
+        assertFalse(block.getCheck(Color.WHITE));
+
+
+
+        ChessBoard ignore = board.hypotheticalMove(7,1,5,2);
+        System.out.println("IGNORE");
+        System.out.println(ignore);
+        assertNull(ignore.getPiece(7,1));
+        assertEquals(new Knight(), ignore.getPiece(5,2));
+        assertTrue(ignore.getCheck(Color.WHITE));
+    }
 }

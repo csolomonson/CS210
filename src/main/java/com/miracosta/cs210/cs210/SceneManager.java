@@ -47,7 +47,7 @@ public class SceneManager {
         try {
             game = new Scene(new FXMLLoader(GameApplication.class.getResource("chessBoard.fxml")).load(), 910, 689);
         } catch (IOException e) {
-            System.out.println("game");
+            throw new RuntimeException(e);
         }
     }
 }

@@ -42,6 +42,7 @@ public class GameController {
     public void handleUndoMove() {
         removeHighlights();
         if (board.getPrevious() != null) board = board.getPrevious();
+        board.getChessBoard().update();
         updateBoard();
     }
 
