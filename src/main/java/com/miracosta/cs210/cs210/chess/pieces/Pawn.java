@@ -5,8 +5,8 @@ import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
 import javafx.scene.image.Image;
 
-import static com.miracosta.cs210.cs210.chess.pieces.Color.BLACK;
-import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
+import static com.miracosta.cs210.cs210.chess.pieces.PieceColor.BLACK;
+import static com.miracosta.cs210.cs210.chess.pieces.PieceColor.WHITE;
 
 /**
  * A Pawn that can push forward, capture diagonally, double move on its first move, capture en passant, and be captured en passant
@@ -22,10 +22,10 @@ public class Pawn extends ChessPiece implements EnPassantPiece, Cloneable{
 
     /**
      * Create a Pawn of the given Color
-     * @param color Color of the Pawn
+     * @param pieceColor Color of the Pawn
      */
-    public Pawn(Color color) {
-        super(color);
+    public Pawn(PieceColor pieceColor) {
+        super(pieceColor);
     }
 
     /**

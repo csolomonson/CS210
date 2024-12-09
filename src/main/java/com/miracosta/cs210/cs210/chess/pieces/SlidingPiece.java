@@ -18,15 +18,15 @@ public abstract class SlidingPiece extends ChessPiece {
      * Generic WHITE SlidingPiece
      */
     public SlidingPiece() {
-        this(Color.WHITE);
+        this(PieceColor.WHITE);
     }
 
     /**
      * Generic SlidingPiece of a given Color
-     * @param color Color of the SlidingPiece
+     * @param pieceColor Color of the SlidingPiece
      */
-    public SlidingPiece(Color color) {
-        super(color);
+    public SlidingPiece(PieceColor pieceColor) {
+        super(pieceColor);
     }
 
     @Override

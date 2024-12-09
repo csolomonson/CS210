@@ -13,21 +13,21 @@ class ChessPieceTest {
         board = new ChessBoard();
         board.clearBoard();
 
-        board.setPiece(new Rook(Color.BLACK), 0, 4);
-        board.setPiece(new King(Color.BLACK), 0, 5);
-        board.setPiece(new Knight(Color.BLACK), 0, 6);
+        board.setPiece(new Rook(PieceColor.BLACK), 0, 4);
+        board.setPiece(new King(PieceColor.BLACK), 0, 5);
+        board.setPiece(new Knight(PieceColor.BLACK), 0, 6);
 
-        board.setPiece(new Queen(Color.BLACK), 2, 0);
-        board.setPiece(new Knight(Color.WHITE), 2, 5);
-        board.setPiece(new Pawn(Color.BLACK), 2, 6);
-        board.setPiece(new Rook(Color.BLACK), 2, 7);
+        board.setPiece(new Queen(PieceColor.BLACK), 2, 0);
+        board.setPiece(new Knight(PieceColor.WHITE), 2, 5);
+        board.setPiece(new Pawn(PieceColor.BLACK), 2, 6);
+        board.setPiece(new Rook(PieceColor.BLACK), 2, 7);
 
-        board.setPiece(new Pawn(Color.BLACK),3, 0);
-        board.setPiece(new Pawn(Color.WHITE),3, 2);
-        board.setPiece(new Pawn(Color.BLACK),3, 5);
-        board.setPiece(new Bishop(Color.WHITE),3, 7);
+        board.setPiece(new Pawn(PieceColor.BLACK),3, 0);
+        board.setPiece(new Pawn(PieceColor.WHITE),3, 2);
+        board.setPiece(new Pawn(PieceColor.BLACK),3, 5);
+        board.setPiece(new Bishop(PieceColor.WHITE),3, 7);
 
-        board.setPiece(new Pawn(Color.WHITE), 4, 7);
+        board.setPiece(new Pawn(PieceColor.WHITE), 4, 7);
 
         board.setPiece(new Rook(), 5, 1);
         board.setPiece(new Rook(), 5, 3);
@@ -145,7 +145,7 @@ class ChessPieceTest {
 
         assertTrue(piece1.move(board.getTile(5,3)));
         assertNull(board.getPiece(2,0));
-        assertEquals(new Queen(Color.BLACK), board.getPiece(5,3));
+        assertEquals(new Queen(PieceColor.BLACK), board.getPiece(5,3));
         assertTrue(piece1.isLegalMove(5,1));
         assertTrue(piece2.isLegalMove(5,3));
 

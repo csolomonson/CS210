@@ -4,7 +4,7 @@ import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.miracosta.cs210.cs210.chess.pieces.Color.BLACK;
+import static com.miracosta.cs210.cs210.chess.pieces.PieceColor.BLACK;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EnPassantPieceTest {

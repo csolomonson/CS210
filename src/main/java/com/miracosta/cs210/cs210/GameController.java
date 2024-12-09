@@ -1,7 +1,11 @@
 package com.miracosta.cs210.cs210;
 
 
+import com.miracosta.cs210.cs210.bots.BotDifficulty;
+import com.miracosta.cs210.cs210.bots.GameBot;
+import com.miracosta.cs210.cs210.bots.RandomBot;
 import com.miracosta.cs210.cs210.chess.pieces.ChessPiece;
+import com.miracosta.cs210.cs210.chess.pieces.PieceColor;
 import com.miracosta.cs210.cs210.game.GameBoard;
 import com.miracosta.cs210.cs210.game.GameTile;
 import com.miracosta.cs210.cs210.minesweeper.MinesweeperTile;
@@ -29,6 +33,10 @@ public class GameController {
     ImageManager images;
     GameBoard board;
     GameTile selection;
+    boolean multiplayer = false;
+    BotDifficulty difficulty = BotDifficulty.EASY;
+    GameBot bot;
+    PieceColor botColor = PieceColor.WHITE;
 
     public GameController() {
         images = ImageManager.getInstance();
@@ -37,6 +45,10 @@ public class GameController {
     public void initialize() {
         board = new GameBoard();
         updateBoard();
+        switch (difficulty) {
+            case EASY:
+                bot = new RandomBot(board, botColor);
+        }
     }
 
     public void handleUndoMove() {

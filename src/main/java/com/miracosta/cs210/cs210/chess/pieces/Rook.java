@@ -10,23 +10,23 @@ import javafx.scene.image.Image;
 public class Rook extends SlidingPiece{
     /**
      * Create a Rook of a given Color
-     * @param color Color of the Rook
+     * @param pieceColor Color of the Rook
      */
-    public Rook(Color color) {
-        super(color);
+    public Rook(PieceColor pieceColor) {
+        super(pieceColor);
         setRookProperties();
     }
 
     @Override
     public String toString() {
-        if (getColor() == Color.WHITE) return "♖";
+        if (getColor() == PieceColor.WHITE) return "♖";
         return "♜";
     }
 
     @Override
     public Image getImage() {
         ImageManager imageManager = ImageManager.getInstance();
-        if (getColor() == Color.WHITE) return imageManager.whiteRook;
+        if (getColor() == PieceColor.WHITE) return imageManager.whiteRook;
         return imageManager.blackRook;
     }
 

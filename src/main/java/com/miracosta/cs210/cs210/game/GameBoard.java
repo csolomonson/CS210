@@ -3,7 +3,7 @@ package com.miracosta.cs210.cs210.game;
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
 import com.miracosta.cs210.cs210.chess.pieces.ChessPiece;
-import com.miracosta.cs210.cs210.chess.pieces.Color;
+import com.miracosta.cs210.cs210.chess.pieces.PieceColor;
 import com.miracosta.cs210.cs210.minesweeper.MinesweeperBoard;
 import com.miracosta.cs210.cs210.minesweeper.MinesweeperTile;
 
@@ -45,6 +45,25 @@ public class GameBoard implements Cloneable {
                 }
             }
         }
+    }
+
+    public ArrayList<ChessPiece> getPieces(PieceColor pieceColor) {
+        ArrayList<ChessPiece> pieces = new ArrayList<>();
+        for (int i = 0; i < NUM_ROWS; i++) {
+            for (int j = 0; j < NUM_COLS; j++) {
+                if (getChessBoard().getTile(i,j).isOccupied()) {
+                    ChessPiece piece = getChessBoard().getTile(i,j).getPiece();
+                    if (piece.getColor() == pieceColor) pieces.add(piece);
+                }
+            }
+        }
+        return  pieces;
+    }
+
+    public ArrayList<ChessPiece> getPieces() {
+        ArrayList<ChessPiece> pieces = getPieces(PieceColor.BLACK);
+        pieces.addAll(getPieces(PieceColor.WHITE));
+        return pieces;
     }
 
     public GameBoard getPrevious() {
@@ -89,7 +108,7 @@ public class GameBoard implements Cloneable {
         return getGameTile(minesweeperTile.getRow(), minesweeperTile.getColumn());
     }
 
-    public Color getColorToMove() {
+    public PieceColor getColorToMove() {
         return chessBoard.getColorToMove();
     }
 

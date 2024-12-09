@@ -17,23 +17,23 @@ public class Queen extends SlidingPiece{
 
     /**
      * Create a Queen of a given Color
-     * @param color Color of the Queen
+     * @param pieceColor Color of the Queen
      */
-    public Queen(Color color) {
-        super(color);
+    public Queen(PieceColor pieceColor) {
+        super(pieceColor);
         setQueenProperties();
     }
 
     @Override
     public String toString() {
-        if (getColor() == Color.WHITE) return "♕";
+        if (getColor() == PieceColor.WHITE) return "♕";
         return "♛";
     }
 
     @Override
     public Image getImage() {
         ImageManager imageManager = ImageManager.getInstance();
-        if (getColor() == Color.WHITE) return imageManager.whiteQueen;
+        if (getColor() == PieceColor.WHITE) return imageManager.whiteQueen;
         return imageManager.blackQueen;
     }
 

@@ -9,23 +9,23 @@ import javafx.scene.image.Image;
 public class Bishop extends SlidingPiece{
     /**
      * Create a Bishop of a given Color
-     * @param color Color of the Bishop
+     * @param pieceColor Color of the Bishop
      */
-    public Bishop(Color color) {
-        super(color);
+    public Bishop(PieceColor pieceColor) {
+        super(pieceColor);
         setBishopProperties();
     }
 
     @Override
     public String toString() {
-        if (getColor() == Color.WHITE) return "♗";
+        if (getColor() == PieceColor.WHITE) return "♗";
         return "♝";
     }
 
     @Override
     public Image getImage() {
         ImageManager imageManager = ImageManager.getInstance();
-        if (getColor() == Color.WHITE) return imageManager.whiteBishop;
+        if (getColor() == PieceColor.WHITE) return imageManager.whiteBishop;
         return imageManager.blackBishop;
     }
 

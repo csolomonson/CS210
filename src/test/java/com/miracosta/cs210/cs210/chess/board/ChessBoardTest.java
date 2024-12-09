@@ -15,12 +15,12 @@ class ChessBoardTest {
 
     @Test
     void pieceEqualsTest() {
-        Rook r1 = new Rook(Color.WHITE);
-        Rook r2 = new Rook(Color.WHITE);
-        Rook r3 = new Rook(Color.BLACK);
+        Rook r1 = new Rook(PieceColor.WHITE);
+        Rook r2 = new Rook(PieceColor.WHITE);
+        Rook r3 = new Rook(PieceColor.BLACK);
 
-        Knight k1 = new Knight(Color.WHITE);
-        Knight k2 = new Knight(Color.BLACK);
+        Knight k1 = new Knight(PieceColor.WHITE);
+        Knight k2 = new Knight(PieceColor.BLACK);
 
         assertEquals(r1, r2);
         assertNotEquals(r1, r3);
@@ -33,29 +33,29 @@ class ChessBoardTest {
     @Test
     void boardSetup() {
         //black pieces
-        assertEquals(board.getPiece(0, 0), new Rook(Color.BLACK));
-        assertEquals(board.getPiece(0, 1), new Knight(Color.BLACK));
-        assertEquals(board.getPiece(0, 2), new Bishop(Color.BLACK));
-        assertEquals(board.getPiece(0, 3), new Queen(Color.BLACK));
-        assertEquals(board.getPiece(0, 4), new King(Color.BLACK));
-        assertEquals(board.getPiece(0, 5), new Bishop(Color.BLACK));
-        assertEquals(board.getPiece(0, 6), new Knight(Color.BLACK));
-        assertEquals(board.getPiece(0, 7), new Rook(Color.BLACK));
+        assertEquals(board.getPiece(0, 0), new Rook(PieceColor.BLACK));
+        assertEquals(board.getPiece(0, 1), new Knight(PieceColor.BLACK));
+        assertEquals(board.getPiece(0, 2), new Bishop(PieceColor.BLACK));
+        assertEquals(board.getPiece(0, 3), new Queen(PieceColor.BLACK));
+        assertEquals(board.getPiece(0, 4), new King(PieceColor.BLACK));
+        assertEquals(board.getPiece(0, 5), new Bishop(PieceColor.BLACK));
+        assertEquals(board.getPiece(0, 6), new Knight(PieceColor.BLACK));
+        assertEquals(board.getPiece(0, 7), new Rook(PieceColor.BLACK));
 
         //white pieces
-        assertEquals(board.getPiece(7, 0), new Rook(Color.WHITE));
-        assertEquals(board.getPiece(7, 1), new Knight(Color.WHITE));
-        assertEquals(board.getPiece(7, 2), new Bishop(Color.WHITE));
-        assertEquals(board.getPiece(7, 3), new Queen(Color.WHITE));
-        assertEquals(board.getPiece(7, 4), new King(Color.WHITE));
-        assertEquals(board.getPiece(7, 5), new Bishop(Color.WHITE));
-        assertEquals(board.getPiece(7, 6), new Knight(Color.WHITE));
-        assertEquals(board.getPiece(7, 7), new Rook(Color.WHITE));
+        assertEquals(board.getPiece(7, 0), new Rook(PieceColor.WHITE));
+        assertEquals(board.getPiece(7, 1), new Knight(PieceColor.WHITE));
+        assertEquals(board.getPiece(7, 2), new Bishop(PieceColor.WHITE));
+        assertEquals(board.getPiece(7, 3), new Queen(PieceColor.WHITE));
+        assertEquals(board.getPiece(7, 4), new King(PieceColor.WHITE));
+        assertEquals(board.getPiece(7, 5), new Bishop(PieceColor.WHITE));
+        assertEquals(board.getPiece(7, 6), new Knight(PieceColor.WHITE));
+        assertEquals(board.getPiece(7, 7), new Rook(PieceColor.WHITE));
 
         //pawns
         for (int i = 0; i < 8; i++) {
-            assertEquals(board.getPiece(1, i), new Pawn(Color.BLACK));
-            assertEquals(board.getPiece(6, i), new Pawn(Color.WHITE));
+            assertEquals(board.getPiece(1, i), new Pawn(PieceColor.BLACK));
+            assertEquals(board.getPiece(6, i), new Pawn(PieceColor.WHITE));
         }
 
         //empty tiles
@@ -103,7 +103,7 @@ class ChessBoardTest {
         assertNull(hypothetical.getPiece(6,5));
         assertEquals(new Pawn(), hypothetical.getPiece(5,5));
 
-        assertTrue(hypothetical.getCheck(Color.WHITE));
+        assertTrue(hypothetical.getCheck(PieceColor.WHITE));
 
     }
 
@@ -116,14 +116,14 @@ class ChessBoardTest {
 
         System.out.println(board);
 
-        assertTrue(board.getCheck(Color.WHITE));
+        assertTrue(board.getCheck(PieceColor.WHITE));
 
         ChessBoard block = board.hypotheticalMove(6,6,5,6);
         System.out.println("BLOCK:");
         System.out.println(block);
         assertNull(block.getPiece(6,6));
         assertEquals(new Pawn(), block.getPiece(5,6));
-        assertFalse(block.getCheck(Color.WHITE));
+        assertFalse(block.getCheck(PieceColor.WHITE));
 
 
 
@@ -132,6 +132,6 @@ class ChessBoardTest {
         System.out.println(ignore);
         assertNull(ignore.getPiece(7,1));
         assertEquals(new Knight(), ignore.getPiece(5,2));
-        assertTrue(ignore.getCheck(Color.WHITE));
+        assertTrue(ignore.getCheck(PieceColor.WHITE));
     }
 }

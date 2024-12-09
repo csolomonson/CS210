@@ -1,18 +1,18 @@
 package com.miracosta.cs210.cs210.chess.gameover;
 
-import com.miracosta.cs210.cs210.chess.pieces.Color;
+import com.miracosta.cs210.cs210.chess.pieces.PieceColor;
 
 import java.util.Objects;
 
 public class GameOver extends RuntimeException{
     protected String winner;
     protected String loser;
-    Color victor;
+    PieceColor defeated;
 
-    public GameOver(Color victor) {
+    public GameOver(PieceColor defeated) {
         super();
-        this.victor = victor;
-        if (Objects.requireNonNull(victor) == Color.WHITE) {
+        this.defeated = defeated;
+        if (Objects.requireNonNull(this.defeated) == PieceColor.BLACK) {
             winner = "White";
             loser = "Black";
         } else {
@@ -21,7 +21,7 @@ public class GameOver extends RuntimeException{
         }
     }
 
-    public Color getVictor() {
-        return victor;
+    public PieceColor getDefeated() {
+        return defeated;
     }
 }
