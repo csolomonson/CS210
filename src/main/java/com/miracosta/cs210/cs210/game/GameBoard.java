@@ -2,6 +2,7 @@ package com.miracosta.cs210.cs210.game;
 
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
+import com.miracosta.cs210.cs210.chess.gameover.GameOver;
 import com.miracosta.cs210.cs210.chess.pieces.ChessPiece;
 import com.miracosta.cs210.cs210.chess.pieces.PieceColor;
 import com.miracosta.cs210.cs210.minesweeper.MinesweeperBoard;
@@ -90,7 +91,11 @@ public class GameBoard implements Cloneable {
         GameBoard clone = clone();
         if (chessBoard.move(row1, col1, row2, col2)) {
             previous = clone;
-            getGameTile(row2, col2).trigger();
+            try {
+                getGameTile(row2, col2).trigger();
+            } catch (GameOver g) {
+                System.out.println(g.getMessage());
+            }
             chessBoard.update();
             return true;
         }

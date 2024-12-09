@@ -4,6 +4,7 @@ package com.miracosta.cs210.cs210;
 import com.miracosta.cs210.cs210.bots.BotDifficulty;
 import com.miracosta.cs210.cs210.bots.GameBot;
 import com.miracosta.cs210.cs210.bots.RandomBot;
+import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.pieces.ChessPiece;
 import com.miracosta.cs210.cs210.chess.pieces.PieceColor;
 import com.miracosta.cs210.cs210.game.GameBoard;
@@ -36,7 +37,7 @@ public class GameController {
     boolean multiplayer = false;
     BotDifficulty difficulty = BotDifficulty.EASY;
     GameBot bot;
-    PieceColor botColor = PieceColor.WHITE;
+    PieceColor botColor = PieceColor.BLACK;
 
     public GameController() {
         images = ImageManager.getInstance();
@@ -49,11 +50,25 @@ public class GameController {
             case EASY:
                 bot = new RandomBot(board, botColor);
         }
+        attemptBotMove();
+    }
+
+    public void attemptBotMove() {
+        if (!multiplayer && board.getColorToMove() == botColor) {
+            bot.setGameBoard(board); //in case undo changes board reference
+            bot.botMove();
+            updateBoard();
+        }
     }
 
     public void handleUndoMove() {
         removeHighlights();
-        if (board.getPrevious() != null) board = board.getPrevious();
+        GameBoard previous = board;
+        if (board.getPrevious() != null) previous = board.getPrevious();
+        if (!multiplayer && previous.getColorToMove() == botColor && previous.getPrevious() != null) {
+            previous = previous.getPrevious();
+        } else previous = board;
+        board = previous;
         board.getChessBoard().update();
         updateBoard();
     }
@@ -63,6 +78,7 @@ public class GameController {
         removeHighlights();
         clearNumbers();
         updateBoard();
+        attemptBotMove();
 
     }
 
@@ -245,6 +261,7 @@ public class GameController {
                 beat.setCycleCount(1);
                 beat.play();
             }
+            attemptBotMove();
         } else {
             selection = board.getGameTile(r,c);
             removeHighlights();

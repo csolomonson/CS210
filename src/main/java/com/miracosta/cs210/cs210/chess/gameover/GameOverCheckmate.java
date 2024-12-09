@@ -9,6 +9,6 @@ public class GameOverCheckmate extends GameOver{
 
     @Override
     public String getMessage() {
-        return winner + "defeats " + loser +" by Checkmate.";
+        return winner + " defeats " + loser +" by Checkmate.";
     }
 }
