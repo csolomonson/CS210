@@ -18,6 +18,7 @@ public class ChessBoard {
     private final ChessTile[][] board;
     int moveNumber;
     boolean printMoves = false;
+    private Color turnToMove;
 
     /**
      * Sets up a chessboard with the starting position (use clearBoard if you want a blank board)
@@ -31,6 +32,7 @@ public class ChessBoard {
         }
         resetBoard();
         moveNumber = 0;
+        turnToMove = WHITE;
     }
 
     /**
@@ -136,13 +138,24 @@ public class ChessBoard {
     public boolean move(int row1, int col1, int row2, int col2) {
         ChessPiece piece = getPiece(row1, col1);
         if (piece == null) return false;
+        if (piece.getColor() != turnToMove) return false;
         if (piece.move(getTile(row2, col2))) {
             moveNumber++;
+            toggleMoveTurn();
             update();
             if (printMoves) System.out.println(this);
             return true;
         }
         return false;
+    }
+
+    public void toggleMoveTurn() {
+        if (turnToMove == WHITE) turnToMove = BLACK;
+        else turnToMove = WHITE;
+    }
+
+    public Color getColorToMove() {
+        return turnToMove;
     }
 
     /**

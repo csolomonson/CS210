@@ -54,6 +54,7 @@ public class GameTile {
         ArrayList<GameTile> arr = new ArrayList<>();
         if (chessTile.getPiece() == null)  return arr;
         ChessPiece piece = chessTile.getPiece();
+        if (piece.getColor() != gameBoard.getColorToMove()) return arr;
         for (ChessTile move : piece.getLegalMoves()) {
             arr.add(gameBoard.getGameTile(move));
         }
