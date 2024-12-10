@@ -29,4 +29,18 @@ class GameBoardTest {
         assertNotSame(pawn, pawnClone);
     }
 
+    @Test
+    void hypotheticalTest() {
+        GameBoard board = new GameBoard(0);
+        //assertTrue(board.move(6,0,4,0));
+        GameBoard hypothetical = board.hypotheticalMove(6,0,4,0);
+
+        System.out.println(hypothetical.getChessBoard());
+        System.out.println(board.getChessBoard());
+        assertNotEquals(board, hypothetical);
+        assertNull(hypothetical.getChessBoard().getPiece(6,0));
+        assertEquals(new Pawn(), hypothetical.getChessBoard().getPiece(4,0));
+
+    }
+
 }

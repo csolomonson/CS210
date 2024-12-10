@@ -30,6 +30,11 @@ public class Rook extends SlidingPiece{
         return imageManager.blackRook;
     }
 
+    @Override
+    public double getValue() {
+        return 5;
+    }
+
     /**
      * Create a WHITE Rook
      */

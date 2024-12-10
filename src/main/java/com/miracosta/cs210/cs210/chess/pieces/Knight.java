@@ -54,6 +54,11 @@ public class Knight extends ChessPiece{
         return imageManager.blackKnight;
     }
 
+    @Override
+    public double getValue() {
+        return 3;
+    }
+
     /**
      * Check if an offset results in an in-bounds square that is not occupied by a teammate, and add it to the legalMoves list if so
      * @param board ChessBoard to check

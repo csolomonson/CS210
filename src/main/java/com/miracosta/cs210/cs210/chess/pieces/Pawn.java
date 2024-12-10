@@ -56,6 +56,11 @@ public class Pawn extends ChessPiece implements EnPassantPiece, Cloneable{
         return imageManager.blackPawn;
     }
 
+    @Override
+    public double getValue() {
+        return 1;
+    }
+
     /**
      * Get the direction in which the Pawn can step in the rows
      * @return +1 if the pawn can increase the row position in each step, -1 if the row position can decrease

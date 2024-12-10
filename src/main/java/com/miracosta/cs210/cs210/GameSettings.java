@@ -2,6 +2,7 @@ package com.miracosta.cs210.cs210;
 
 import com.miracosta.cs210.cs210.bots.BotDifficulty;
 import com.miracosta.cs210.cs210.bots.GameBot;
+import com.miracosta.cs210.cs210.bots.MinimaxBot;
 import com.miracosta.cs210.cs210.bots.RandomBot;
 import com.miracosta.cs210.cs210.chess.pieces.PieceColor;
 import com.miracosta.cs210.cs210.game.GameBoard;
@@ -47,6 +48,12 @@ public class GameSettings {
         switch (difficulty) {
             case EASY:
                 bot = new RandomBot();
+                break;
+            case MEDIUM:
+                bot = new MinimaxBot(2);
+                break;
+            case HARD:
+                bot = new MinimaxBot(4);
         }
     }
 

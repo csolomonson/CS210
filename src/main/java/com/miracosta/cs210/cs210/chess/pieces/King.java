@@ -27,6 +27,11 @@ public class King extends SlidingPiece{
         return imageManager.blackKing;
     }
 
+    @Override
+    public double getValue() {
+        return 1000;
+    }
+
     public King() {
         super();
         setKingProperties();

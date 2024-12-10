@@ -176,6 +176,8 @@ public abstract class ChessPiece implements Cloneable {
 
     public abstract Image getImage();
 
+    public abstract double getValue();
+
 
     public void removeCheckingMoves() {
         ArrayList<ChessTile> toRemove = new ArrayList<>();

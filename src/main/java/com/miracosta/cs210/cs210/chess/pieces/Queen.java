@@ -37,6 +37,11 @@ public class Queen extends SlidingPiece{
         return imageManager.blackQueen;
     }
 
+    @Override
+    public double getValue() {
+        return 9;
+    }
+
     /**
      * Set SlidingPiece properties (directions and range of motion)
      */

@@ -29,6 +29,11 @@ public class Bishop extends SlidingPiece{
         return imageManager.blackBishop;
     }
 
+    @Override
+    public double getValue() {
+        return 3;
+    }
+
     /**
      * Create a WHITE Bishop
      */
