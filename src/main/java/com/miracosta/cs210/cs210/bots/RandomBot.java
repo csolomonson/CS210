@@ -17,6 +17,10 @@ public class RandomBot extends GameBot{
         super(gameBoard, turn);
     }
 
+    public RandomBot() {
+        super();
+    }
+
     @Override
     public void botMove() throws GameOver {
         ArrayList<ChessPiece> possiblePieces = gameBoard.getPieces(turn);

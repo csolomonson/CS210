@@ -1,12 +1,6 @@
 package com.miracosta.cs210.cs210;
 
-
-import com.miracosta.cs210.cs210.bots.BotDifficulty;
-import com.miracosta.cs210.cs210.bots.GameBot;
-import com.miracosta.cs210.cs210.bots.RandomBot;
-import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.pieces.ChessPiece;
-import com.miracosta.cs210.cs210.chess.pieces.PieceColor;
 import com.miracosta.cs210.cs210.game.GameBoard;
 import com.miracosta.cs210.cs210.game.GameTile;
 import com.miracosta.cs210.cs210.minesweeper.MinesweeperTile;
@@ -32,49 +26,44 @@ public class GameController {
     final double PIECE_SIZE = 60;
     public AnchorPane anchorPane;
     ImageManager images;
-    GameBoard board;
     GameTile selection;
-    boolean multiplayer = false;
-    BotDifficulty difficulty = BotDifficulty.EASY;
-    GameBot bot;
-    PieceColor botColor = PieceColor.BLACK;
+    GameSettings settings;
 
     public GameController() {
         images = ImageManager.getInstance();
 
     }
     public void initialize() {
-        board = new GameBoard();
+        System.out.println("Initializing game!");
+        settings = GameSettings.getInstance();
+
+        settings.setBoard(new GameBoard(settings.getNumMines()));
         updateBoard();
-        switch (difficulty) {
-            case EASY:
-                bot = new RandomBot(board, botColor);
-        }
+
         attemptBotMove();
     }
 
     public void attemptBotMove() {
-        if (!multiplayer && board.getColorToMove() == botColor) {
-            bot.setGameBoard(board); //in case undo changes board reference
-            bot.botMove();
+        if (!settings.isMultiplayer() && settings.getBoard().getColorToMove() == settings.getBotColor()) {
+            settings.getGameBot(settings.getBoard()).botMove();
             updateBoard();
         }
     }
 
     public void handleUndoMove() {
         removeHighlights();
-        GameBoard previous = board;
-        if (board.getPrevious() != null) previous = board.getPrevious();
-        if (!multiplayer && previous.getColorToMove() == botColor && previous.getPrevious() != null) {
+        GameBoard previous = settings.getBoard();
+        if (settings.getBoard().getPrevious() != null) previous = settings.getBoard().getPrevious();
+        if (!settings.isMultiplayer() && previous.getColorToMove() == settings.getBotColor() && previous.getPrevious() != null) {
             previous = previous.getPrevious();
-        } else previous = board;
-        board = previous;
-        board.getChessBoard().update();
+        } else previous = settings.getBoard();
+        settings.setBoard(previous);
+        settings.getBoard().getChessBoard().update();
         updateBoard();
     }
 
     public void handleRestartGame() {
-        board = new GameBoard();
+        settings.setBoard(new GameBoard(settings.getNumMines()));
         removeHighlights();
         clearNumbers();
         updateBoard();
@@ -83,7 +72,7 @@ public class GameController {
     }
 
     public void drawBoard() {
-        for (ChessPiece piece : board.getChessPieces()) {
+        for (ChessPiece piece : settings.getBoard().getChessPieces()) {
             renderImage(piece.getImage(), piece.getPosition().getRow(), piece.getPosition().getColumn(), PIECE_SIZE, -12,0);
         }
     }
@@ -123,7 +112,7 @@ public class GameController {
     }
 
     private void renderMinesweeperTile(int r, int c) {
-        GameTile tile = board.getGameTile(r, c);
+        GameTile tile = settings.getBoard().getGameTile(r, c);
         switch (tile.getDisplayState()) {
             case NUMBER:
                 anchorPane.getChildren().add(getMinesweeperNumber(r,c));
@@ -137,7 +126,7 @@ public class GameController {
     }
 
     public Text getMinesweeperNumber(int r, int c) {
-        GameTile tile = board.getGameTile(r, c);
+        GameTile tile = settings.getBoard().getGameTile(r, c);
         int n = tile.getSurroundingBombs();
         Text number = new Text(Integer.toString(n));
         number.setFont(new Font(40));
@@ -184,7 +173,7 @@ public class GameController {
     public void drawBurns() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (board.getGameTile(i,j).getDisplayState() == GameTile.MinesweeperDisplayState.CRATER) {
+                if (settings.getBoard().getGameTile(i,j).getDisplayState() == GameTile.MinesweeperDisplayState.CRATER) {
                     renderImage(ImageManager.getInstance().burn, i, j, 67);
                 }
             }
@@ -202,7 +191,7 @@ public class GameController {
     }
 
     public void highlightLegalMoves(int r, int c) {
-        GameTile tile = board.getGameTile(r, c);
+        GameTile tile = settings.getBoard().getGameTile(r, c);
         for (GameTile t : tile.getLegalChessMoves()) {
             highlightSquare(t.getRow(), t.getCol());
         }
@@ -240,19 +229,19 @@ public class GameController {
     }
 
     public void addFlag(int r, int c) {
-        board.getGameTile(r,c).flag();
+        settings.getBoard().getGameTile(r,c).flag();
         updateBoard();
         updateMinesweeper();
     }
 
     public void tileClicked(int r, int c) {
-        boolean explode = board.getGameTile(r, c).getMinesweeperTile().getBombState() == MinesweeperTile.BombState.ACTIVE_BOMB;
+        boolean explode = settings.getBoard().getGameTile(r, c).getMinesweeperTile().getBombState() == MinesweeperTile.BombState.ACTIVE_BOMB;
         if (selection == null) {
-            selection = board.getGameTile(r, c);
+            selection = settings.getBoard().getGameTile(r, c);
             highlightLegalMoves(r, c);
             return;
         }
-        if (board.move(selection.getRow(), selection.getCol(), r, c)) {
+        if (settings.getBoard().move(selection.getRow(), selection.getCol(), r, c)) {
             selection = null;
             removeHighlights();
             updateBoard();
@@ -267,7 +256,7 @@ public class GameController {
             }
             attemptBotMove();
         } else {
-            selection = board.getGameTile(r,c);
+            selection = settings.getBoard().getGameTile(r,c);
             removeHighlights();
             highlightLegalMoves(r, c);
         }

@@ -13,6 +13,10 @@ public abstract class GameBot {
         setTurn(turn);
     }
 
+    public GameBot() {
+        super();
+    }
+
     public GameBoard getGameBoard() {
         return gameBoard;
     }

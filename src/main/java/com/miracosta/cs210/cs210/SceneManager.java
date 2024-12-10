@@ -28,6 +28,15 @@ public class SceneManager {
         return instance;
     }
 
+    public void initGame() {
+        try {
+            game = new Scene(new FXMLLoader(GameApplication.class.getResource("chessBoard.fxml")).load(), 910, 689);
+        } catch (IOException e) {
+            System.out.println("Whoops");
+        }
+
+    }
+
     private void loadFXAssets() {
         try {
             mainMenu = new Scene(new FXMLLoader(GameApplication.class.getResource("MainMenu.fxml")).load(), 299, 187);
