@@ -84,7 +84,7 @@ public class GameController {
 
     public void drawBoard() {
         for (ChessPiece piece : board.getChessPieces()) {
-            renderImage(piece.getImage(), piece.getPosition().getRow(), piece.getPosition().getColumn(), PIECE_SIZE);
+            renderImage(piece.getImage(), piece.getPosition().getRow(), piece.getPosition().getColumn(), PIECE_SIZE, -12,0);
         }
     }
 
@@ -99,14 +99,18 @@ public class GameController {
         updateMinesweeper();
     }
 
-    private void renderImage(Image piece, int r, int c, double size) {
+    private void renderImage(Image piece, int r, int c, double size, double xOff, double yOff) {
         ImageView pieceImage = new ImageView(piece);
         pieceImage.setFitHeight(size);
         pieceImage.setFitWidth(size);
-        pieceImage.setLayoutX(X_OFFSET + SQUARE_WIDTH / 2 - size / 2 + c * SQUARE_WIDTH);
-        pieceImage.setLayoutY(Y_OFFSET + SQUARE_HEIGHT / 2 - size / 2 + r * SQUARE_HEIGHT);
+        pieceImage.setLayoutX(X_OFFSET + SQUARE_WIDTH / 2 - size / 2 + c * SQUARE_WIDTH + xOff);
+        pieceImage.setLayoutY(Y_OFFSET + SQUARE_HEIGHT / 2 - size / 2 + r * SQUARE_HEIGHT + yOff);
         pieceImage.toFront();
         anchorPane.getChildren().add(pieceImage);
+    }
+
+    private void renderImage(Image piece, int r, int c, double size) {
+        renderImage(piece, r, c, size, 0, 0);
     }
 
     public void updateMinesweeper() {
@@ -125,7 +129,7 @@ public class GameController {
                 anchorPane.getChildren().add(getMinesweeperNumber(r,c));
                 break;
             case BOMB:
-                renderImage(ImageManager.getInstance().bomb, r, c, 30);
+                renderImage(ImageManager.getInstance().bomb, r, c, 30, SQUARE_WIDTH/4, -SQUARE_HEIGHT/4);
                 break;
             case FLAG:
                 renderImage(ImageManager.getInstance().flag, r, c, 30);
@@ -136,10 +140,10 @@ public class GameController {
         GameTile tile = board.getGameTile(r, c);
         int n = tile.getSurroundingBombs();
         Text number = new Text(Integer.toString(n));
-        number.setFont(new Font(50));
-        number.setLayoutX(X_OFFSET + SQUARE_WIDTH / 2 - 14 + c * SQUARE_WIDTH);
-        number.setLayoutY(Y_OFFSET + SQUARE_HEIGHT / 2 + 17 + r * SQUARE_HEIGHT);
-        number.setStroke(Color.WHITE);
+        number.setFont(new Font(40));
+        number.setLayoutX(X_OFFSET + SQUARE_WIDTH / 2 + 5 + c * SQUARE_WIDTH);
+        number.setLayoutY(Y_OFFSET + SQUARE_HEIGHT / 2 + 3 + r * SQUARE_HEIGHT);
+        number.setStroke(Color.BLACK);
         number.setStrokeWidth(1);
         switch (n) {
             case 1:
