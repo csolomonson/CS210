@@ -18,12 +18,11 @@ class EnPassantPieceTest {
 
     /**
      * Check that a pawn that just double moved can be captured en passant
-     * NOTE: this will fail once turn-taking is enforced
      * @author Cole Solomonson
      */
     @Test
     void enPassantableTest() {
-
+        board.toggleMoveTurn();
         assertTrue(board.move(1,0,3,0));
         EnPassantPiece piece = (EnPassantPiece) board.getPiece(3,0);
         assertTrue(piece.getEnPassantStatus());

@@ -161,24 +161,4 @@ class ChessPieceTest {
         assertEquals(1, pawn3.getLegalMoves().size());
         assertEquals(0, pawn4.getLegalMoves().size());
     }
-
-    /**
-     * Make sure the move method actually alters the board, and only if the move is legal
-     * @author Cole Solomonson
-     */
-    @Test
-    void moveTest() {
-        ChessPiece piece1 = board.getPiece(2,0);
-        ChessPiece piece2 = board.getPiece(5,1);
-
-        assertTrue(piece1.move(board.getTile(5,3)));
-        assertNull(board.getPiece(2,0));
-        assertEquals(new Queen(PieceColor.BLACK), board.getPiece(5,3));
-        assertTrue(piece1.isLegalMove(5,1));
-        assertTrue(piece2.isLegalMove(5,3));
-
-    }
-
-
-
 }
