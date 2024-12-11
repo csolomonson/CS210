@@ -40,6 +40,10 @@ class ChessPieceTest {
         board.update();
     }
 
+    /**
+     * Make sure the rook has the correct number of moves, and that the moves are correct
+     * @author Cole Solomonson
+     */
     @Test
     void rookMoves() {
         ChessPiece rook1 = board.getPiece(5, 1);
@@ -67,6 +71,10 @@ class ChessPieceTest {
         assertEquals(3, rook4.getLegalMoves().size());
     }
 
+    /**
+     * Make sure the bishop has the right number of legal moves, and that a sample of the moves are correct
+     * @author Cole Solomonson
+     */
     @Test
     void bishopMoves() {
         ChessPiece bishop = board.getPiece(3, 7);
@@ -77,6 +85,10 @@ class ChessPieceTest {
         assertTrue(bishop.isLegalMove(4,6));
     }
 
+    /**
+     * Make sure the knight legal moves are correctly generated
+     * @author Cole Solomonson
+     */
     @Test
     void knightMoves() {
         Knight knight1 = (Knight) board.getPiece(0, 6);
@@ -95,6 +107,10 @@ class ChessPieceTest {
         assertTrue(knight1.isLegalMove(2,5));
     }
 
+    /**
+     * Make sure everything's on the up-and-up with the queens
+     * @author Cole Solomonson
+     */
     @Test
     void queenTest() {
         Queen queen1 = (Queen) board.getPiece(2,0);
@@ -108,6 +124,10 @@ class ChessPieceTest {
         assertTrue(queen1.isLegalMove(5,3));
     }
 
+    /**
+     * Make sure the king can make all the legal moves and none of the illegal ones
+     * @author Cole Solomonson
+     */
     @Test
     void kingTest() {
         King king1 = (King) board.getPiece(0, 5);
@@ -120,6 +140,10 @@ class ChessPieceTest {
         assertEquals(4, king2.getLegalMoves().size());
     }
 
+    /**
+     * Check pawn normal move, capture, and double move powers
+     * @author Cole Solomonson
+     */
     @Test
     void pawnTest() {
         Pawn pawn1 = (Pawn) board.getPiece(2,6);
@@ -138,6 +162,10 @@ class ChessPieceTest {
         assertEquals(0, pawn4.getLegalMoves().size());
     }
 
+    /**
+     * Make sure the move method actually alters the board, and only if the move is legal
+     * @author Cole Solomonson
+     */
     @Test
     void moveTest() {
         ChessPiece piece1 = board.getPiece(2,0);

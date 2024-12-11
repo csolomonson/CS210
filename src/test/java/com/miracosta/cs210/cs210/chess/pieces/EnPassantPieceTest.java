@@ -16,6 +16,11 @@ class EnPassantPieceTest {
         board.setPrintMoves(true);
     }
 
+    /**
+     * Check that a pawn that just double moved can be captured en passant
+     * NOTE: this will fail once turn-taking is enforced
+     * @author Cole Solomonson
+     */
     @Test
     void enPassantableTest() {
 
@@ -24,6 +29,10 @@ class EnPassantPieceTest {
         assertTrue(piece.getEnPassantStatus());
     }
 
+    /**
+     * Make sure pawns can double move on their first move
+     * @author Cole Solomonson
+     */
     @Test
     void pawnDoubleMoveTest() {
         board.clearBoard();
@@ -38,6 +47,10 @@ class EnPassantPieceTest {
         assertTrue(board.getPiece(1,0).isLegalMove(3,0));
     }
 
+    /**
+     * Test that pawns can be correctly captured en passant
+     * @author Cole Solomonson
+     */
     @Test
     void EnPassantCaptureTest() {
         board.setPiece(new Pawn(BLACK), 4,1);
@@ -51,6 +64,10 @@ class EnPassantPieceTest {
         assertEquals(new Pawn(BLACK), board.getPiece(5,0));
     }
 
+    /**
+     * Test that en passant doesn't accidentally work after just two single moves
+     * @author Cole Solomonson
+     */
     @Test
     void checkEnPassantOnlyWorksOnDoubleMoves() {
         board.setPiece(new Pawn(BLACK), 4,1);
@@ -67,6 +84,10 @@ class EnPassantPieceTest {
         assertFalse(board.move(4,1,5,0));
     }
 
+    /**
+     * Test that en passant doesn't work if you hesitate
+     * @author Cole Solomonson
+     */
     @Test
     void checkEnPassantOnlyWorksImmediately() {
         board.setPiece(new Pawn(BLACK), 4,1);
@@ -81,6 +102,10 @@ class EnPassantPieceTest {
         assertFalse(board.move(4,1,5,0));
     }
 
+    /**
+     * It was previously deleting pieces whenever a piece that could possible en passant moved, even if the move was not a capture
+     * @author Cole Solomonson
+     */
     @Test void checkWeDontDeletePiecesThatWerentSupposedToBeDeleted() {
         board.setPiece(new Pawn(BLACK), 4,1);
         board.update();

@@ -13,6 +13,11 @@ class ChessBoardTest {
         board = new ChessBoard();
     }
 
+    /**
+     * Check that the equals methods of each chess piece are working
+     * Equals method only compares type and color, not position or board or anything.
+     * @author Cole Solomonson
+     */
     @Test
     void pieceEqualsTest() {
         Rook r1 = new Rook(PieceColor.WHITE);
@@ -30,6 +35,11 @@ class ChessBoardTest {
         assertNotEquals(r3, k2);
     }
 
+    /**
+     * The ChessBoard constructor places the pieces in the standard configuration.
+     * This test makes sure everything is in the right place following the constructor call
+     * @author Cole Solomonson
+     */
     @Test
     void boardSetup() {
         //black pieces
@@ -67,6 +77,10 @@ class ChessBoardTest {
 
     }
 
+    /**
+     * Make sure the coordinates of each ChessTile in the ChessBoard are correct
+     * @author Cole Solomonson
+     */
     @Test
     void tileTester() {
         for(int i = 0; i < 8; i++) {
@@ -77,11 +91,21 @@ class ChessBoardTest {
         }
     }
 
+    /**
+     * Not really a test, I just made a beautiful toString that I wanted to print out.
+     * I visibly inspect if it is correct.
+     * @author Cole Solomonson
+     */
     @Test
     void testPrint() {
         System.out.println(board.toString());
     }
 
+    /**
+     * Hypothetical move clones the board, makes a move on the board, and returns the clone
+     * Make sure all the references are correct and stuff, and the clone actually moves
+     * @author Cole Solomonson
+     */
     @Test
     void testHypotheticalMove() {
         ChessBoard hypothetical = board.hypotheticalMove(6, 4, 4, 4);
@@ -90,6 +114,11 @@ class ChessBoardTest {
         assertEquals(board, hypothetical);
     }
 
+    /**
+     * Make sure the getCheck functionality is working in hypothetical clones.
+     * This test exists because it previously was not working.
+     * @author Cole Solomonson
+     */
     @Test
     void testHypotheticalChecks() {
         assertTrue(board.move(7,1,5,2));
@@ -107,6 +136,10 @@ class ChessBoardTest {
 
     }
 
+    /**
+     * Make sure the getCheck functionality works normally (when not in hypothetical clones)
+     * @author Cole Solomonson
+     */
     @Test
     void testChecks() {
         assertTrue(board.move(7,1,5,2));

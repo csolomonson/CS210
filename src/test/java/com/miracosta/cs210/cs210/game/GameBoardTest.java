@@ -8,6 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameBoardTest {
 
+    /**
+     * Check that we're on the up-and-up with the clone and equals methods
+     * @author Cole Solomonson
+     */
     @Test
     void cloneTest() {
         GameBoard board = new GameBoard();
@@ -17,6 +21,10 @@ class GameBoardTest {
         assertNotSame(board, clone);
     }
 
+    /**
+     * Make sure my understanding of cloning subclasses is correct
+     * @author Cole Solomonson
+     */
     @Test
     void pieceCloneTest() {
         GameBoard board = new GameBoard();
@@ -29,6 +37,10 @@ class GameBoardTest {
         assertNotSame(pawn, pawnClone);
     }
 
+    /**
+     * Make sure that hypothetical GameBoard moves actually move as intended
+     * @author Cole Solomonson
+     */
     @Test
     void hypotheticalTest() {
         GameBoard board = new GameBoard(0);
