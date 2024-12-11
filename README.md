@@ -9,7 +9,7 @@
  to strategize against both the opponent and the mines. The amount of mines placed on each
  side of the board can be decided. The game is expected to progress over several updates,
  ultimately connecting to real-life players. Additionally, it seeks to provide features, such as
- selecting the number of mines in total (being an even amount on both sides of the board) and
+ selecting the number of mines in total and
  other additional features to ensure chaos. The diagram below illustrates the external entities
  and system interfaces. It also describes the user classes and their way of interacting within the
  system.
