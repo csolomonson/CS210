@@ -56,9 +56,11 @@ public class GameController {
         removeHighlights();
         GameBoard previous = settings.getBoard();
         if (settings.getBoard().getPrevious() != null) previous = settings.getBoard().getPrevious();
-        if (!settings.isMultiplayer() && previous.getColorToMove() == settings.getBotColor() && previous.getPrevious() != null) {
-            previous = previous.getPrevious();
-        } else previous = settings.getBoard();
+        if (!settings.isMultiplayer()) {
+            if (previous.getColorToMove() == settings.getBotColor() && previous.getPrevious() != null) {
+                previous = previous.getPrevious();
+            } else previous = settings.getBoard();
+        }
         settings.setBoard(previous);
         settings.getBoard().getChessBoard().update();
         updateBoard();

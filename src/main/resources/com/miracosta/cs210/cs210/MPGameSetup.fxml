@@ -13,18 +13,17 @@
          <Font name="Berlin Sans FB Demi Bold" size="18.0" />
       </font>
    </Label>
-   <Label layoutX="90.0" layoutY="79.0" prefHeight="16.0" prefWidth="150.0" text="Minutes Per Side (1 - 5):">
+   <Label layoutX="90.0" layoutY="158.0" prefHeight="16.0" prefWidth="200.0" text="Number of Mines (1-10):">
       <font>
          <Font name="Berlin Sans FB Demi Bold" size="14.0" />
       </font>
    </Label>
-   <TextField fx:id="minutesTextField" layoutX="88.0" layoutY="102.0" />
    <Label layoutX="90.0" layoutY="158.0" prefHeight="16.0" prefWidth="150.0" text="Number of Mines (1-10):">
       <font>
          <Font name="Berlin Sans FB Demi Bold" size="14.0" />
       </font>
    </Label>
-   <TextField fx:id="minesTextField" layoutX="89.0" layoutY="182.0" />
+   <TextField fx:id="minesTextField" layoutX="89.0" layoutY="182.0" text="10" />
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b1ac93" height="34.0" layoutX="63.0" layoutY="456.0" stroke="#b1ac93" strokeType="INSIDE" width="82.0" />
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b1ac93" height="34.0" layoutX="167.0" layoutY="456.0" stroke="#b1ac93" strokeType="INSIDE" width="82.0" />
    <Label layoutX="89.0" layoutY="451.0" prefHeight="44.0" prefWidth="39.0" text="Back">
