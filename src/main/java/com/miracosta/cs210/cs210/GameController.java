@@ -45,6 +45,8 @@ public class GameController {
 
     public void attemptBotMove() {
         if (!settings.isMultiplayer() && settings.getBoard().getColorToMove() == settings.getBotColor()) {
+            updateBoard();
+            removeHighlights();
             settings.getGameBot(settings.getBoard()).botMove();
             updateBoard();
         }

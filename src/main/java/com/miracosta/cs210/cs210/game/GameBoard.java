@@ -144,7 +144,7 @@ public class GameBoard implements Cloneable {
             try {
                 getGameTile(row2, col2).trigger();
             } catch (GameOver g) {
-                System.out.println(g.getMessage());
+                //System.out.println(g.getMessage());
             }
             chessBoard.update();
             return true;
@@ -193,5 +193,9 @@ public class GameBoard implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
+    }
+
+    public String toString() {
+        return chessBoard + "\n" + minesweeperBoard;
     }
 }
