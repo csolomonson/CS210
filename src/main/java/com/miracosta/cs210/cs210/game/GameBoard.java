@@ -2,8 +2,9 @@ package com.miracosta.cs210.cs210.game;
 
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
+import com.miracosta.cs210.cs210.chess.gameover.GameOver;
 import com.miracosta.cs210.cs210.chess.pieces.ChessPiece;
-import com.miracosta.cs210.cs210.chess.pieces.Color;
+import com.miracosta.cs210.cs210.chess.pieces.PieceColor;
 import com.miracosta.cs210.cs210.minesweeper.MinesweeperBoard;
 import com.miracosta.cs210.cs210.minesweeper.MinesweeperTile;
 
@@ -17,6 +18,8 @@ public class GameBoard implements Cloneable {
     private MinesweeperBoard minesweeperBoard;
     private GameTile[][] board;
     GameBoard previous;
+    PieceColor checkmate = PieceColor.EMPTY;
+    PieceColor stalemate = PieceColor.EMPTY;
 
     @Override
     public boolean equals(Object o) {
@@ -29,6 +32,33 @@ public class GameBoard implements Cloneable {
     @Override
     public int hashCode() {
         return Objects.hash(getChessBoard(), getMinesweeperBoard());
+    }
+    
+    public void checkEndgames() {
+        checkEndgames(PieceColor.BLACK);
+        checkEndgames(PieceColor.WHITE);
+    }
+
+    private void checkEndgames(PieceColor color) {
+        boolean legalMoves = false;
+        for (ChessPiece piece : getPieces(color)) {
+            if (!piece.getLegalMoves().isEmpty()) {
+                legalMoves = true;
+                break;
+            }
+        }
+        if (!legalMoves) {
+            if (getChessBoard().getCheck(color)) checkmate = color;
+            else stalemate = color;
+        }
+    }
+
+    public PieceColor getCheckmate() {
+        return checkmate;
+    }
+
+    public PieceColor getStalemate() {
+        return stalemate;
     }
 
     public GameBoard(int numBombs) {
@@ -45,6 +75,25 @@ public class GameBoard implements Cloneable {
                 }
             }
         }
+    }
+
+    public ArrayList<ChessPiece> getPieces(PieceColor pieceColor) {
+        ArrayList<ChessPiece> pieces = new ArrayList<>();
+        for (int i = 0; i < NUM_ROWS; i++) {
+            for (int j = 0; j < NUM_COLS; j++) {
+                if (getChessBoard().getTile(i,j).isOccupied()) {
+                    ChessPiece piece = getChessBoard().getTile(i,j).getPiece();
+                    if (piece.getColor() == pieceColor) pieces.add(piece);
+                }
+            }
+        }
+        return  pieces;
+    }
+
+    public ArrayList<ChessPiece> getPieces() {
+        ArrayList<ChessPiece> pieces = getPieces(PieceColor.BLACK);
+        pieces.addAll(getPieces(PieceColor.WHITE));
+        return pieces;
     }
 
     public GameBoard getPrevious() {
@@ -67,15 +116,48 @@ public class GameBoard implements Cloneable {
         return board[row][col];
     }
 
-    public boolean move(int row1, int col1, int row2, int col2) {
+    public GameBoard hypotheticalMove(int row1, int col1, int row2, int col2) {
         GameBoard clone = clone();
+        clone.move(row1, col1, row2, col2, false);
+        return clone;
+    }
+
+    public GameBoard hypotheticalMove(ChessTile start, ChessTile end) {
+        return  hypotheticalMove(start.getRow(), start.getColumn(), end.getRow(), end.getColumn());
+    }
+
+    public ArrayList<GameBoard> getAllPossibleNextStates() {
+        ArrayList<GameBoard> states = new ArrayList<>();
+        for (ChessPiece piece : getPieces(getColorToMove())) {
+            for (ChessTile tile : piece.getLegalMoves()) {
+                states.add(hypotheticalMove(piece.getPosition().getRow(), piece.getPosition().getColumn(), tile.getRow(), tile.getColumn()));
+            }
+        }
+        return states;
+    }
+
+    public boolean move(int row1, int col1, int row2, int col2, boolean savePrevious) {
+        GameBoard clone = null;
+        if (savePrevious) clone = clone();
         if (chessBoard.move(row1, col1, row2, col2)) {
             previous = clone;
-            getGameTile(row2, col2).trigger();
+            try {
+                getGameTile(row2, col2).trigger();
+            } catch (GameOver g) {
+                //System.out.println(g.getMessage());
+            }
             chessBoard.update();
             return true;
         }
         return false;
+    }
+
+    public boolean move(int row1, int col1, int row2, int col2) {
+        return move(row1, col1, row2, col2, true);
+    }
+
+    public boolean move(GameTile start, GameTile end) {
+        return move(start.getRow(), start.getCol(), end.getRow(), end.getCol());
     }
 
     public GameTile getGameTile(ChessTile chessTile) {
@@ -89,7 +171,7 @@ public class GameBoard implements Cloneable {
         return getGameTile(minesweeperTile.getRow(), minesweeperTile.getColumn());
     }
 
-    public Color getColorToMove() {
+    public PieceColor getColorToMove() {
         return chessBoard.getColorToMove();
     }
 
@@ -98,6 +180,7 @@ public class GameBoard implements Cloneable {
         try {
             GameBoard clone = (GameBoard) super.clone();
             clone.chessBoard = chessBoard.clone();
+            clone.chessBoard.update();
             clone.minesweeperBoard = minesweeperBoard.clone();
             if (previous != null)  clone.previous = this.previous.clone();
             clone.board = new GameTile[NUM_ROWS][NUM_COLS];
@@ -110,5 +193,9 @@ public class GameBoard implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
+    }
+
+    public String toString() {
+        return chessBoard + "\n" + minesweeperBoard;
     }
 }

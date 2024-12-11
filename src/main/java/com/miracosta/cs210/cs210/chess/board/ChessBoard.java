@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static com.miracosta.cs210.cs210.chess.pieces.Color.*;
+import static com.miracosta.cs210.cs210.chess.pieces.PieceColor.*;
 
 /**
  * An entire chessboard, made of ChessTiles that might contain ChessPieces
@@ -19,7 +19,7 @@ public class ChessBoard implements Cloneable {
     boolean whiteCheck;
     boolean blackCheck;
     boolean printMoves = false;
-    private Color turnToMove;
+    private PieceColor turnToMove;
 
     @Override
     public boolean equals(Object o) {
@@ -34,13 +34,13 @@ public class ChessBoard implements Cloneable {
         return Objects.hash(BOARD_ROWS, BOARD_COLUMNS, Arrays.deepHashCode(board), turnToMove);
     }
 
-    public void setCheck(Color color) {
-        if (color == WHITE) whiteCheck = true;
-        else if (color == BLACK) blackCheck = true;
+    public void setCheck(PieceColor pieceColor) {
+        if (pieceColor == WHITE) whiteCheck = true;
+        else if (pieceColor == BLACK) blackCheck = true;
     }
 
-    public boolean getCheck(Color color) {
-        if (color == WHITE) return whiteCheck;
+    public boolean getCheck(PieceColor pieceColor) {
+        if (pieceColor == WHITE) return whiteCheck;
         return blackCheck;
     }
 
@@ -214,7 +214,7 @@ public class ChessBoard implements Cloneable {
         else turnToMove = WHITE;
     }
 
-    public Color getColorToMove() {
+    public PieceColor getColorToMove() {
         return turnToMove;
     }
 

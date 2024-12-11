@@ -1,6 +1,5 @@
 package com.miracosta.cs210.cs210.chess.pieces;
 
-import com.miracosta.cs210.cs210.ImageManager;
 import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
 import javafx.scene.image.Image;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
  */
 public abstract class ChessPiece implements Cloneable {
     private ChessTile position;
-    private Color color;
+    private PieceColor pieceColor;
     private ArrayList<ChessPiece> canAttack;
     private ArrayList<ChessPiece> canBeAttacked;
     protected ArrayList<ChessTile> legalMoves;
@@ -32,18 +31,18 @@ public abstract class ChessPiece implements Cloneable {
         canBeAttacked = new ArrayList<>();
         legalMoves = new ArrayList<>();
         position = new ChessTile();
-        color = Color.WHITE;
+        pieceColor = PieceColor.WHITE;
         //imageManager = ImageManager.getInstance();
     }
 
     /**
      * Initializes a generic piece of the specified color
      *
-     * @param color Color enum for this piece
+     * @param pieceColor Color enum for this piece
      */
-    ChessPiece(Color color) {
+    ChessPiece(PieceColor pieceColor) {
         this();
-        this.color = color;
+        this.pieceColor = pieceColor;
     }
 
     /**
@@ -51,17 +50,17 @@ public abstract class ChessPiece implements Cloneable {
      *
      * @return Color enum representing this piece's color
      */
-    public Color getColor() {
-        return color;
+    public PieceColor getColor() {
+        return pieceColor;
     }
 
     /**
      * Change the color of this piece
      *
-     * @param color new Color enum
+     * @param pieceColor new Color enum
      */
-    public void setColor(Color color) {
-        this.color = color;
+    public void setColor(PieceColor pieceColor) {
+        this.pieceColor = pieceColor;
     }
 
     /**
@@ -177,6 +176,8 @@ public abstract class ChessPiece implements Cloneable {
 
     public abstract Image getImage();
 
+    public abstract double getValue();
+
 
     public void removeCheckingMoves() {
         ArrayList<ChessTile> toRemove = new ArrayList<>();
@@ -208,9 +209,9 @@ public abstract class ChessPiece implements Cloneable {
      *
      * @return BLACK if this piece is WHITE, WHITE if this piece is BLACK
      */
-    protected Color getOppositeColor() {
-        if (color == Color.WHITE) return Color.BLACK;
-        return Color.WHITE;
+    protected PieceColor getOppositeColor() {
+        if (pieceColor == PieceColor.WHITE) return PieceColor.BLACK;
+        return PieceColor.WHITE;
     }
 
     /**
@@ -257,15 +258,15 @@ public abstract class ChessPiece implements Cloneable {
 
     public ChessPiece oppositeClone() {
         ChessPiece clone = clone();
-        if (getColor() == Color.WHITE) clone.setColor(Color.BLACK);
-        else clone.setColor(Color.WHITE);
+        if (getColor() == PieceColor.WHITE) clone.setColor(PieceColor.BLACK);
+        else clone.setColor(PieceColor.WHITE);
         return clone;
     }
 
-    public Color lookForChecks() {
+    public PieceColor lookForChecks() {
         for (ChessTile tile : legalMoves) {
             //no need to even look if the opponent is already in check
-            if (board.getCheck(getOppositeColor())) return Color.EMPTY;
+            if (board.getCheck(getOppositeColor())) return PieceColor.EMPTY;
             if (tile.isOccupied()) {
                 if (tile.getPiece() instanceof King && tile.getPiece().getColor() == getOppositeColor()) {
                     //System.out.println("CHECK FROM " + this);
@@ -273,6 +274,6 @@ public abstract class ChessPiece implements Cloneable {
                 }
             }
         }
-        return Color.EMPTY;
+        return PieceColor.EMPTY;
     }
 }

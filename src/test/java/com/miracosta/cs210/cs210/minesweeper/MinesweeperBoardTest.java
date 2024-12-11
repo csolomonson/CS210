@@ -8,6 +8,8 @@ class MinesweeperBoardTest {
 
     /**
      * Could theoretically fail by chance, but odds are 1 in 64C10 = 151,473,214,816
+     * Test that two randomly generated MinesweeperBoards do not have the same bombs
+     * @author Cole Solomonson
      */
     @Test
     void randomizationTest() {

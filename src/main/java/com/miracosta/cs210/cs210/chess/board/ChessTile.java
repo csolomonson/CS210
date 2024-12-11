@@ -1,10 +1,8 @@
 package com.miracosta.cs210.cs210.chess.board;
 
 import com.miracosta.cs210.cs210.chess.pieces.ChessPiece;
-import com.miracosta.cs210.cs210.chess.pieces.Color;
+import com.miracosta.cs210.cs210.chess.pieces.PieceColor;
 import com.miracosta.cs210.cs210.chess.pieces.EnPassantPiece;
-
-import java.util.Objects;
 
 /**
  * Class to represent a specific tile (identified by a row and column number) on a ChessBoard, and any piece it may contain.
@@ -113,9 +111,9 @@ public class ChessTile implements Cloneable {
      * Get the color of the piece on this tile
      * @return Color of the piece on this tile (EMPTY if unoccupied)
      */
-    public Color getColor() {
+    public PieceColor getColor() {
         if (isOccupied()) return getPiece().getColor();
-        return Color.EMPTY;
+        return PieceColor.EMPTY;
     }
 
     /**
@@ -131,7 +129,7 @@ public class ChessTile implements Cloneable {
      * @param pieceColor Color of the piece that might be on this tile
      * @return True if this tile contains a pawn that can currently be captured by en passant and is of the given Color
      */
-    public boolean hasEnPassantablePiece(Color pieceColor) {
+    public boolean hasEnPassantablePiece(PieceColor pieceColor) {
         if (!isOccupied()) return false;
         if (!(piece instanceof EnPassantPiece epp)) return false;
         if (!(getColor() == pieceColor)) return false;

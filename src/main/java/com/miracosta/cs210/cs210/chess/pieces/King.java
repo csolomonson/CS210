@@ -9,22 +9,27 @@ import javafx.scene.image.Image;
  * TODO Can't walk into check
  */
 public class King extends SlidingPiece{
-    public King(Color color) {
-        super(color);
+    public King(PieceColor pieceColor) {
+        super(pieceColor);
         setKingProperties();
     }
 
     @Override
     public String toString() {
-        if (getColor() == Color.WHITE) return "♔";
+        if (getColor() == PieceColor.WHITE) return "♔";
         return "♚";
     }
 
     @Override
     public Image getImage() {
         ImageManager imageManager = ImageManager.getInstance();
-        if (getColor() == Color.WHITE) return imageManager.whiteKing;
+        if (getColor() == PieceColor.WHITE) return imageManager.whiteKing;
         return imageManager.blackKing;
+    }
+
+    @Override
+    public double getValue() {
+        return 1000;
     }
 
     public King() {

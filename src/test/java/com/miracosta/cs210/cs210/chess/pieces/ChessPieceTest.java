@@ -13,21 +13,21 @@ class ChessPieceTest {
         board = new ChessBoard();
         board.clearBoard();
 
-        board.setPiece(new Rook(Color.BLACK), 0, 4);
-        board.setPiece(new King(Color.BLACK), 0, 5);
-        board.setPiece(new Knight(Color.BLACK), 0, 6);
+        board.setPiece(new Rook(PieceColor.BLACK), 0, 4);
+        board.setPiece(new King(PieceColor.BLACK), 0, 5);
+        board.setPiece(new Knight(PieceColor.BLACK), 0, 6);
 
-        board.setPiece(new Queen(Color.BLACK), 2, 0);
-        board.setPiece(new Knight(Color.WHITE), 2, 5);
-        board.setPiece(new Pawn(Color.BLACK), 2, 6);
-        board.setPiece(new Rook(Color.BLACK), 2, 7);
+        board.setPiece(new Queen(PieceColor.BLACK), 2, 0);
+        board.setPiece(new Knight(PieceColor.WHITE), 2, 5);
+        board.setPiece(new Pawn(PieceColor.BLACK), 2, 6);
+        board.setPiece(new Rook(PieceColor.BLACK), 2, 7);
 
-        board.setPiece(new Pawn(Color.BLACK),3, 0);
-        board.setPiece(new Pawn(Color.WHITE),3, 2);
-        board.setPiece(new Pawn(Color.BLACK),3, 5);
-        board.setPiece(new Bishop(Color.WHITE),3, 7);
+        board.setPiece(new Pawn(PieceColor.BLACK),3, 0);
+        board.setPiece(new Pawn(PieceColor.WHITE),3, 2);
+        board.setPiece(new Pawn(PieceColor.BLACK),3, 5);
+        board.setPiece(new Bishop(PieceColor.WHITE),3, 7);
 
-        board.setPiece(new Pawn(Color.WHITE), 4, 7);
+        board.setPiece(new Pawn(PieceColor.WHITE), 4, 7);
 
         board.setPiece(new Rook(), 5, 1);
         board.setPiece(new Rook(), 5, 3);
@@ -40,6 +40,10 @@ class ChessPieceTest {
         board.update();
     }
 
+    /**
+     * Make sure the rook has the correct number of moves, and that the moves are correct
+     * @author Cole Solomonson
+     */
     @Test
     void rookMoves() {
         ChessPiece rook1 = board.getPiece(5, 1);
@@ -67,6 +71,10 @@ class ChessPieceTest {
         assertEquals(3, rook4.getLegalMoves().size());
     }
 
+    /**
+     * Make sure the bishop has the right number of legal moves, and that a sample of the moves are correct
+     * @author Cole Solomonson
+     */
     @Test
     void bishopMoves() {
         ChessPiece bishop = board.getPiece(3, 7);
@@ -77,6 +85,10 @@ class ChessPieceTest {
         assertTrue(bishop.isLegalMove(4,6));
     }
 
+    /**
+     * Make sure the knight legal moves are correctly generated
+     * @author Cole Solomonson
+     */
     @Test
     void knightMoves() {
         Knight knight1 = (Knight) board.getPiece(0, 6);
@@ -95,6 +107,10 @@ class ChessPieceTest {
         assertTrue(knight1.isLegalMove(2,5));
     }
 
+    /**
+     * Make sure everything's on the up-and-up with the queens
+     * @author Cole Solomonson
+     */
     @Test
     void queenTest() {
         Queen queen1 = (Queen) board.getPiece(2,0);
@@ -108,6 +124,10 @@ class ChessPieceTest {
         assertTrue(queen1.isLegalMove(5,3));
     }
 
+    /**
+     * Make sure the king can make all the legal moves and none of the illegal ones
+     * @author Cole Solomonson
+     */
     @Test
     void kingTest() {
         King king1 = (King) board.getPiece(0, 5);
@@ -120,6 +140,10 @@ class ChessPieceTest {
         assertEquals(4, king2.getLegalMoves().size());
     }
 
+    /**
+     * Check pawn normal move, capture, and double move powers
+     * @author Cole Solomonson
+     */
     @Test
     void pawnTest() {
         Pawn pawn1 = (Pawn) board.getPiece(2,6);
@@ -138,6 +162,10 @@ class ChessPieceTest {
         assertEquals(0, pawn4.getLegalMoves().size());
     }
 
+    /**
+     * Make sure the move method actually alters the board, and only if the move is legal
+     * @author Cole Solomonson
+     */
     @Test
     void moveTest() {
         ChessPiece piece1 = board.getPiece(2,0);
@@ -145,7 +173,7 @@ class ChessPieceTest {
 
         assertTrue(piece1.move(board.getTile(5,3)));
         assertNull(board.getPiece(2,0));
-        assertEquals(new Queen(Color.BLACK), board.getPiece(5,3));
+        assertEquals(new Queen(PieceColor.BLACK), board.getPiece(5,3));
         assertTrue(piece1.isLegalMove(5,1));
         assertTrue(piece2.isLegalMove(5,3));
 

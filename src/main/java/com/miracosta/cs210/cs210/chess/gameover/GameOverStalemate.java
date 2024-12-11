@@ -1,9 +1,9 @@
 package com.miracosta.cs210.cs210.chess.gameover;
 
-import com.miracosta.cs210.cs210.chess.pieces.Color;
+import com.miracosta.cs210.cs210.chess.pieces.PieceColor;
 
 public class GameOverStalemate extends GameOver{
-    public GameOverStalemate(Color victor) {
+    public GameOverStalemate(PieceColor victor) {
         super(victor);
     }
 

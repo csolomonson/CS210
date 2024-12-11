@@ -1,5 +1,6 @@
 package com.miracosta.cs210.cs210;
 
+import com.miracosta.cs210.cs210.game.GameBoard;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -17,7 +18,11 @@ public class MultiplayerController {
     }
     @FXML
     void handleStartGame() {
+        GameSettings.getInstance().setNumMines(Integer.parseInt(minesTextField.getText()));
+        GameSettings.getInstance().setMultiplayer(true);
+        GameSettings.getInstance().setBoard(new GameBoard(GameSettings.getInstance().getNumMines()));
         SceneManager assets = SceneManager.getInstance();
+        assets.initGame();
         assets.stage.setScene(assets.game);
     }
 }

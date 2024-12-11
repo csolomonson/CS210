@@ -128,4 +128,26 @@ public class MinesweeperBoard implements Cloneable {
             throw new AssertionError();
         }
     }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < NUM_ROWS; i++) {
+            for (int j = 0; j < NUM_COLS; j++) {
+                MinesweeperTile tile = board[i][j];
+                switch (tile.getBombState()) {
+                    case NO_BOMB:
+                        s.append(tile.getSurroundingBombs());
+                        break;
+                    case EXPLODED_BOMB:
+                        s.append("X");
+                        break;
+                    default:
+                        s.append("*");
+                }
+                s.append(" ");
+            }
+            s.append("\n");
+        }
+        return s.toString();
+    }
 }

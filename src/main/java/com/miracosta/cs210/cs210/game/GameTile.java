@@ -1,7 +1,11 @@
 package com.miracosta.cs210.cs210.game;
 
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
+import com.miracosta.cs210.cs210.chess.gameover.GameOver;
+import com.miracosta.cs210.cs210.chess.gameover.GameOverKingExploded;
 import com.miracosta.cs210.cs210.chess.pieces.ChessPiece;
+import com.miracosta.cs210.cs210.chess.pieces.King;
+import com.miracosta.cs210.cs210.chess.pieces.PieceColor;
 import com.miracosta.cs210.cs210.minesweeper.MinesweeperTile;
 
 import java.util.ArrayList;
@@ -61,13 +65,22 @@ public class GameTile {
         return arr;
     }
 
-    public void trigger() {
+    public void trigger() throws GameOver {
+        boolean kingExploded = false;
+        PieceColor color = PieceColor.WHITE;
         if (minesweeperTile.getBombState() == MinesweeperTile.BombState.ACTIVE_BOMB) {
+            if (chessTile.isOccupied()) {
+                if (chessTile.getPiece() instanceof King) {
+                    kingExploded = true;
+                    color = chessTile.getPiece().getColor();
+                }
+            }
             chessTile.clearPiece();
             //System.out.println("Explosion at " + row + ", " + col + "!");
             chessTile.getBoard().update();
         }
         minesweeperTile.trigger();
+        if (kingExploded) throw new GameOverKingExploded(color);
     }
 
     public void flag() {

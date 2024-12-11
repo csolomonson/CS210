@@ -5,7 +5,7 @@ import com.miracosta.cs210.cs210.chess.board.ChessBoard;
 import com.miracosta.cs210.cs210.chess.board.ChessTile;
 import javafx.scene.image.Image;
 
-import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
+import static com.miracosta.cs210.cs210.chess.pieces.PieceColor.WHITE;
 
 /**
  * A Knight that can jump in an L-ish shape
@@ -13,10 +13,10 @@ import static com.miracosta.cs210.cs210.chess.pieces.Color.WHITE;
 public class Knight extends ChessPiece{
     /**
      * Create a Knight of the given Color
-     * @param color Color of the Knight
+     * @param pieceColor Color of the Knight
      */
-    public Knight(Color color) {
-        super(color);
+    public Knight(PieceColor pieceColor) {
+        super(pieceColor);
     }
 
     /**
@@ -52,6 +52,11 @@ public class Knight extends ChessPiece{
         ImageManager imageManager = ImageManager.getInstance();
         if (getColor() == WHITE) return imageManager.whiteKnight;
         return imageManager.blackKnight;
+    }
+
+    @Override
+    public double getValue() {
+        return 3;
     }
 
     /**
