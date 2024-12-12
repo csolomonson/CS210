@@ -11,6 +11,7 @@ public class GameApplication extends Application {
         assets = SceneManager.getInstance();
         assets.stage = stage;
         Scene scene = assets.mainMenu;
+        stage.getIcons().add(ImageManager.getInstance().bomb);
         stage.setScene(scene);
         stage.show();
     }

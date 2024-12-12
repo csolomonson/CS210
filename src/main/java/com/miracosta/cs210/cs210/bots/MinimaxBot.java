@@ -15,7 +15,7 @@ public class MinimaxBot extends GameBot{
     int depth;
     int movesPondered = 0;
     int movesPruned = 0;
-    HashMap<String, Double> calculated;
+    HashMap<String, Move> calculated;
 
     public MinimaxBot(int depth) {
         super();
@@ -25,18 +25,18 @@ public class MinimaxBot extends GameBot{
 
     @Override
     public void botMove() throws GameOver {
-        calculated.clear();
+        //calculated.clear();
         movesPondered = movesPruned = 0;
-        double eval;
-        if (turn == PieceColor.WHITE) eval = maxi(depth, gameBoard, -9999999999., 9999999999.);
-        else eval = mini(depth, gameBoard, -9999999999., 9999999999.);
-        System.out.println(eval);
+        Move move;
+        if (turn == PieceColor.WHITE) move = maxi(depth, gameBoard, -9999999999., 9999999999.);
+        else move = mini(depth, gameBoard, -9999999999., 9999999999.);
+        System.out.println(move.getScore());
         System.out.println("Pondered: " + movesPondered);
         System.out.println("Pruned: " + movesPruned);
-        gameBoard.move(start, end);
+        gameBoard.move(move.getStart(), move.getEnd());
     }
 
-    private double mini(int depth, GameBoard board, double alpha, double beta) {
+    private Move mini(int depth, GameBoard board, double alpha, double beta) {
         String saveString = board.toString() + depth + "min";
         if (depth < 1) return evaluate(board);
         if (calculated.containsKey(saveString)) {
@@ -50,28 +50,25 @@ public class MinimaxBot extends GameBot{
         for (ChessPiece piece : board.getPieces(board.getColorToMove())) {
             for (ChessTile tile : piece.getLegalMoves()) {
                 movesPondered++;
-                score = maxi(depth - 1, board.hypotheticalMove(piece.getPosition(), tile), alpha, beta);
-                if (score < min) {
+                Move move = maxi(depth - 1, board.hypotheticalMove(piece.getPosition(), tile), alpha, beta);
+                if (move.getScore() < min) {
                     start = board.getGameTile(piece.getPosition());
                     end = board.getGameTile(tile);
-                    min = score;
+                    min = move.getScore();
                 }
                 if (min < beta) beta = min;
                 if (alpha >= beta) {
-                    calculated.put(saveString, min);
-                    this.start = start;
-                    this.end = end;
-                    return min;
+                    calculated.put(saveString, move);
+                    return move;
                 }
             }
         }
-        calculated.put(saveString, min);
-        this.start = start;
-        this.end = end;
-        return min;
+        Move move = new Move(start, end, min);
+        calculated.put(saveString, move);
+        return move;
     }
 
-    private double maxi(int depth, GameBoard board, double alpha, double beta) {
+    private Move maxi(int depth, GameBoard board, double alpha, double beta) {
         String saveString = board.toString() + depth + "max";
         if (depth < 1) return evaluate(board);
         if (calculated.containsKey(saveString)) {
@@ -85,29 +82,26 @@ public class MinimaxBot extends GameBot{
         for (ChessPiece piece : board.getPieces(board.getColorToMove())) {
             for (ChessTile tile : piece.getLegalMoves()) {
                 movesPondered++;
-                score = mini(depth - 1, board.hypotheticalMove(piece.getPosition(), tile), alpha, beta);
-                if (score > max) {
+                Move move = mini(depth - 1, board.hypotheticalMove(piece.getPosition(), tile), alpha, beta);
+                if (move.getScore() > max) {
                     start = board.getGameTile(piece.getPosition());
                     end = board.getGameTile(tile);
-                    max = score;
+                    max = move.getScore();
                 }
                 if (max > alpha) alpha = max;
 
                 if (beta >= alpha) {
-                    calculated.put(saveString, max);
-                    this.start = start;
-                    this.end = end;
-                    return max;
+                    calculated.put(saveString, move);
+                    return move;
                 }
             }
         }
-        calculated.put(saveString, max);
-        this.start = start;
-        this.end = end;
-        return max;
+        Move move = new Move(start, end, max);
+        calculated.put(saveString, move);
+        return move;
     }
 
-    private double evaluate(GameBoard board) {
+    private Move evaluate(GameBoard board) {
         //more positive for white winning, more negative for black winning
         double evaluation = 0;
         for (ChessPiece whitePiece : board.getPieces(PieceColor.WHITE)) {
@@ -120,6 +114,30 @@ public class MinimaxBot extends GameBot{
 
         if (board.getCheckmate() == PieceColor.WHITE || board.getStalemate() == PieceColor.WHITE) evaluation += 1000000;
         if (board.getCheckmate() == PieceColor.BLACK || board.getStalemate() == PieceColor.BLACK) evaluation -= 1000000;
-        return evaluation;
+        return new Move(null, null, evaluation);
+    }
+
+    private class Move {
+        GameTile start;
+        GameTile end;
+        double score;
+
+        public Move(GameTile start, GameTile end, double score) {
+            this.start = start;
+            this.end = end;
+            this.score = score;
+        }
+
+        public GameTile getStart() {
+            return start;
+        }
+
+        public GameTile getEnd() {
+            return end;
+        }
+
+        public double getScore() {
+            return score;
+        }
     }
 }
